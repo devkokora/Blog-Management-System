@@ -11,33 +11,63 @@ namespace Blog_Management_System.Controllers
         private readonly IUserInteractive _userInteractive;
         public HomeController(ILogger<HomeController> logger,
             IForumInteractive forumInteractive,
-            IUserInteractive userInteractive)
+            IUserInteractive userInteractive,
+            IHttpContextAccessor httpContextAccessor)
         {
             _forumInteractive = forumInteractive;
             _userInteractive = userInteractive;
+
+            var username = httpContextAccessor?.HttpContext?.Session.GetString("Username");
+            if (username is not null)
+            {
+                var user = _userInteractive.GetUserByUserName(username);
+                _forumInteractive.User = user;
+            }
+
             _forumInteractive.Forums = _forumInteractive.GetAllForums();
         }
 
         public IActionResult Index()
         {
             var forums = _forumInteractive.Forums;
-            var user = _forumInteractive.User;
-            var viewmodels = new HomeViewModels(forums, user);
-            return View(viewmodels);
-        }
 
-        public IActionResult Login(string name)
-        {
-            var user = _userInteractive.GetUserByUserName(name);
-            if (user is not null)
+            if (_forumInteractive.User is null)
             {
-                _forumInteractive.User = user;
+                var viewmodels = new HomeViewModels(forums, null);
+                return View(viewmodels);
             }
             else
             {
-                user = _userInteractive.CreateUser(name);
-                _forumInteractive.User = user;
+                var viewmodels = new HomeViewModels(forums, _forumInteractive.User);
+                return View(viewmodels);
             }
+        }
+
+        [HttpPost]
+        public IActionResult Login(string? username)
+        {
+            if (username is not null)
+            {
+                _forumInteractive.User = new User();
+                var user = _userInteractive.GetUserByUserName(username);
+                if (user is not null)
+                {
+                    _forumInteractive.User = user;
+                }
+                else
+                {
+                    user = _userInteractive.CreateUser(username);
+                    _forumInteractive.User = user;
+                }
+
+                HttpContext.Session.SetString("Username", user!.Username);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
             return RedirectToAction("Index");
         }
 

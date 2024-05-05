@@ -4,7 +4,7 @@ namespace Blog_Management_System.ViewModels
 {
     public class HomeViewModels
     {
-        public User? User { get;}
+        public User? User { get; set; }
         public List<Forum>? Forums { get; }
         public HomeViewModels(List<Forum>? forums, User? user)
         {

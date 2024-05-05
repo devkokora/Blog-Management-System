@@ -4,6 +4,7 @@ using Blog_Management_System.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_Management_System.Migrations
 {
     [DbContext(typeof(BlogManagementSystemDbContext))]
-    partial class BlogManagementSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240505161314_firstInit")]
+    partial class firstInit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,16 +101,6 @@ namespace Blog_Management_System.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-
-                    b.HasData(
-                        new
-                        {
-                            CommentId = 1,
-                            Body = "wtf..",
-                            ForumId = 1,
-                            Like = 2,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Blog_Management_System.Models.Forum", b =>
@@ -140,26 +133,6 @@ namespace Blog_Management_System.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Forums");
-
-                    b.HasData(
-                        new
-                        {
-                            ForumId = 1,
-                            Body = "hello",
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2064),
-                            Like = 3,
-                            Title = "I found alien last year",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            ForumId = 2,
-                            Body = "...",
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2075),
-                            Like = 18,
-                            Title = "Hello from another world",
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Blog_Management_System.Models.Status", b =>
@@ -218,21 +191,21 @@ namespace Blog_Management_System.Migrations
                         new
                         {
                             Id = 1,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2094),
+                            Created_at = new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6785),
                             Role = "admin",
                             Username = "chukka"
                         },
                         new
                         {
                             Id = 2,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2095),
+                            Created_at = new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6793),
                             Role = "user",
                             Username = "otto"
                         },
                         new
                         {
                             Id = 3,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2096),
+                            Created_at = new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6794),
                             Role = "user",
                             Username = "Juijui"
                         });

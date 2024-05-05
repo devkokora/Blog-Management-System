@@ -2,7 +2,7 @@
 {
     public interface IUserInteractive
     {
-        User? GetUserByUserName(string username);
-        User? CreateUser(string username);
+        User? GetUserByUserName(string? username);
+        User? CreateUser(string? username);
     }
 }

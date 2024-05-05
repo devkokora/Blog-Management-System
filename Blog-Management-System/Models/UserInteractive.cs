@@ -9,7 +9,7 @@
             _blogManagementSystemDbContext = blogManagementSystemDbContext;
         }
 
-        public User? CreateUser(string username)
+        public User? CreateUser(string? username)
         {
             if (username is not null && username != string.Empty)
             {
@@ -29,9 +29,9 @@
             return null;
         }
 
-        public User? GetUserByUserName(string username)
+        public User? GetUserByUserName(string? username)
         {
-            var user = _blogManagementSystemDbContext.Users.Find(username);
+            var user = _blogManagementSystemDbContext.Users.FirstOrDefault(un => un.Username == username);
             if (user is not null)
                 return user;
             else

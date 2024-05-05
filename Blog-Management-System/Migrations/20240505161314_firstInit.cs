@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Blog_Management_System.Migrations
 {
     /// <inheritdoc />
@@ -17,7 +19,7 @@ namespace Blog_Management_System.Migrations
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -149,6 +151,38 @@ namespace Blog_Management_System.Migrations
                         principalTable: "Statuses",
                         principalColumn: "StatusId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoryId", "CategoryName" },
+                values: new object[,]
+                {
+                    { 1, "alien" },
+                    { 2, "ufo" },
+                    { 3, "dog" },
+                    { 4, "cat" },
+                    { 5, "nasa" },
+                    { 6, "zombie" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Statuses",
+                columns: new[] { "StatusId", "StatusName" },
+                values: new object[,]
+                {
+                    { 1, "Hot" },
+                    { 2, "New" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Created_at", "Role", "Username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6785), "admin", "chukka" },
+                    { 2, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6793), "user", "otto" },
+                    { 3, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6794), "user", "Juijui" }
                 });
 
             migrationBuilder.CreateIndex(

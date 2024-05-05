@@ -4,13 +4,14 @@
 // Write your JavaScript code.
 let count = 0;
 let onclick = true;
+
 $(window).on('load', addNoise);
 
 function addNoise() {
     if (count === 1) {
         $('.loader').text('Text here..');
     } else {
-        $('.loader').text('Signal loss..');
+        $('.loader').text('Loading...');
     }
     $('.noise-wrapper').css('opacity', 1);
     $('.modal-footer-textarea').css('opacity', 0);
@@ -18,27 +19,22 @@ function addNoise() {
     count++;
 }
 
-const textArea = document.querySelector(".modal-footer-textarea");
-textArea.addEventListener("click", (event) => {
-    event.stopPropagation();
-    $('.loader').text('');
-    $('.noise-wrapper').css('opacity', 0);
-    $('.modal-footer-textarea').css('opacity', 1);
-    $('.modal-footer-textarea-btn').css('display', "block");
-    onclick = true;
-});
+const textAreas = document.querySelectorAll(".modal-footer-textarea");
+textAreas.forEach((textArea) => {
+    textArea.addEventListener("click", (event) => {
+        event.stopPropagation();
+        $('.loader').text('');
+        $('.noise-wrapper').css('opacity', 0);
+        $('.modal-footer-textarea').css('opacity', 1);
+        $('.modal-footer-textarea-btn').css('display', "block");
+        onclick = true;
+    });
 
-textArea.addEventListener("mouseenter", (event) => {
-    if (onclick === false) {
-    $('.loader').text('Loading...');
-
-    }
-});
-
-textArea.addEventListener("mouseleave", (event) => {
-    if (onclick === false) {
-        addNoise();
-    }
+    textArea.addEventListener("mouseenter", () => {
+        if (onclick === false) {
+            $('.loader').text('Loading...');
+        }
+    });
 });
 
 document.addEventListener("click", () => {

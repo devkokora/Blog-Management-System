@@ -6,7 +6,7 @@
         List<Forum>? Forums { get; set; }
         void CreateForum(Forum forum);
         void EditForum(Forum forum);
-        void RemoveForum(Forum forum);
+        void RemoveForum(int? id);
         List<Forum>? GetAllForums();
         List<Forum>? GetForumsByDetails(List<Status> statuses, List<Category> categories);
         List<Forum>? GetForumsByUserId(int userId);
