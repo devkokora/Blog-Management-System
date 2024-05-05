@@ -1,7 +1,7 @@
-﻿<div class="container mb-4">
-    <div class="row justify-content-center">
+﻿<div class="container">
+    <div class="row justify-content-center mb-3">
         <div class="col-lg-6 ">
-        <div class="mb-3">Statuses</div>
+            <div class="mb-3">Statuses</div>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button">
                 <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
                 <label class="btn btn-outline-danger" for="btncheck1">Hot 🔥</label>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-lg-6  text-end">
-            <div class="mb-3 text-end">Categories</div>            
+            <div class="mb-3 text-end">Categories</div>
             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button">
                 <input type="checkbox" class="btn-check" id="btncheck3" autocomplete="off">
                 <label class="btn btn-outline-warning" for="btncheck3">Alien</label>
@@ -37,4 +37,10 @@
             </div>
         </div>
     </div>
+    <a asp-controller="Home"
+            asp-action="CreateForum"
+            type="button" 
+            class="btn btn-success text-uppercase text-black border-1 border-white">
+    <strong>Create</strong>
+    </a>
 </div>

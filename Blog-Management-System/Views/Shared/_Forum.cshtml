@@ -1,127 +1,134 @@
-﻿<div class="card text-center m-lg-4 bg-success text-black"
+﻿@model Blog_Management_System.ViewModels.HomeViewModels
+<div class="card text-center m-lg-4 bg-success text-black"
      style="border-radius:25px; border-color:whitesmoke; border-width: 2px;">
-    <div class="card-header">
-        <div class="row align-items-center">
-            <div class="row bd-example m-0 border-0">
-                <span class="col-auto me-1 badge rounded-pill bg-danger">Hot 🔥</span>
-                <span class="col-auto me-1 badge rounded-pill bg-danger">New ❗</span>
-                <span class="col-auto me-1 badge rounded-pill bg-warning text-dark">Alien</span>
-            </div>
-            <div class="col-2 text-start">
-                <a href="#" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
-                <div class="text-black fw-bold align-items-center">10232</div>
-            </div>
-            <div class="col-8 fw-bold">
-                <h3>Today I found alien on my backyard.</h3>
-                <div class="align-items-center">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        BlackHole
-                    </button>
+    @if (Model.Forums is not null)
+    {
+        @foreach (var forum in Model.Forums)
+        {
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="row bd-example m-0 border-0">
+                        @if (forum.Statuses is not null)
+                        {
+                            foreach (var status in forum.Statuses)
+                            {
+                                <span class="col-auto me-1 badge rounded-pill bg-danger">@status.StatusName</span>
+                            }
+                        }
+                        @if (forum.Categories is not null)
+                        {
+                            foreach (var category in forum.Categories)
+                            {
+                                <span class="col-auto me-1 badge rounded-pill bg-warning text-dark">@category.CategoryName</span>
+                            }
+                        }
+                    </div>
+                    <div class="col-2 text-start">
+                        <a href="#" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
+                        <div class="text-black fw-bold align-items-center">@forum.Like</div>
+                    </div>
+                    <div class="col-8 fw-bold">
+                        <h3>@forum.Title</h3>
+                        <div class="align-items-center">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                BlackHole
+                            </button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content bg-success bg-opacity-75">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body bg-dark text-white">
-                                    <div class="img-fluid">
-                                        <img src="https://images.unsplash.com/photo-1612512836264-5e58fab88bf0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="width: 100%; height: 100%; object-fit: cover;">
-                                    </div>
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-md-4">.col-md-4</div>
-                                            <div class="col-md-4 ms-auto">.col-md-4 .ms-auto</div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content bg-success bg-opacity-75">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-3 ms-auto">.col-md-3 .ms-auto</div>
-                                            <div class="col-md-2 ms-auto">.col-md-2 .ms-auto</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6 ms-auto">.col-md-6 .ms-auto</div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-9">
-                                                Level 1: .col-sm-9
+                                        <div class="modal-body bg-dark text-white">
+                                            <div class="img-fluid">
+                                                <img src="https://images.unsplash.com/photo-1612512836264-5e58fab88bf0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="width: 100%; height: 100%; object-fit: cover;">
+                                            </div>
+                                            <div class="container-fluid">
                                                 <div class="row">
-                                                    <div class="col-8 col-sm-6">
-                                                        Level 2: .col-8 .col-sm-6
-                                                    </div>
-                                                    <div class="col-4 col-sm-6">
-                                                        Level 2: .col-4 .col-sm-6
+                                                    <div class="col-md-4">.col-md-4</div>
+                                                    <div class="col-md-4 ms-auto">.col-md-4 .ms-auto</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3 ms-auto">.col-md-3 .ms-auto</div>
+                                                    <div class="col-md-2 ms-auto">.col-md-2 .ms-auto</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 ms-auto">.col-md-6 .ms-auto</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-9">
+                                                        Level 1: .col-sm-9
+                                                        <div class="row">
+                                                            <div class="col-8 col-sm-6">
+                                                                Level 2: .col-8 .col-sm-6
+                                                            </div>
+                                                            <div class="col-4 col-sm-6">
+                                                                Level 2: .col-4 .col-sm-6
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @*<div class="modal-footer justify-content-center">
-                                        <form>
-                                            <input class="form-label" type="text" placeholder="Comment..">
-                                            <button type="submit" class="btn btn-dark">Comment</button>
-                                        </form>
-                                    </div>*@
-                            </div>
-                        </div>
 
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content bg-success bg-opacity-75">
-                                <div class="modal-body bg-dark text-white">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-1 text-center text-danger">
-                                                <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
-                                                <br />
-                                                1223
-                                            </div>
-                                            <div class="col-9 ms-auto bg-black">
-                                                The crew of a commercial.
-                                            </div>
-                                            <div class="col-2 ms-auto text-end">
-                                                👽<a href="#">otto</a>
-                                                <br />
-                                                2 mins ago
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content bg-success bg-opacity-75">
+                                        <div class="modal-body bg-dark text-white">
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-1 text-center text-danger">
+                                                        <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
+                                                        <br />
+                                                        1223
+                                                    </div>
+                                                    <div class="col-9 ms-auto bg-black">
+                                                        The crew of a commercial.
+                                                    </div>
+                                                    <div class="col-2 ms-auto text-end">
+                                                        👽<a href="#">otto</a>
+                                                        <br />
+                                                        2 mins ago
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        @*<div class="row">
-                                            <div class="col-12">
-                                                👀
-                                            </div>                                            
-                                        </div>*@
                                     </div>
                                 </div>
+
+                                <form class="comment-footer bg-opacity-50">
+                                    <div class="main-wrapper">
+                                        <p class="loader"></p>
+                                        <label for="exampleFormControlTextarea1" class="form-label modal-footer-textarea-label"></label>
+                                        <textarea class="modal-footer-textarea" id="exampleFormControlTextarea1" rows="5" placeholder="Text here.."></textarea>
+
+                                        <div class="noise-wrapper bg-dark">
+                                            <div class="noise">
+                                                <div class="modal-footer-textarea loader"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
+                                </form>
                             </div>
                         </div>
 
-                        <form class="comment-footer bg-opacity-50">
-                            <div class="main-wrapper">
-                                <p class="loader"></p>
-                                <label for="exampleFormControlTextarea1" class="form-label modal-footer-textarea-label"></label>
-                                <textarea class="modal-footer-textarea" id="exampleFormControlTextarea1" rows="5" placeholder="Text here.."></textarea>
-
-                                <div class="noise-wrapper bg-dark">
-                                    <div class="noise">
-                                        <div class="modal-footer-textarea loader"></div>
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="col-2 text-body-secondary text-end">
+                        <div class="col">
+                            <div><span style="font-size:12px">😀</span><a href="#" style="color:black">chukka</a></div>
+                            <div>
+                                2 days ago
                             </div>
-                            <button type="submit" class="modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-2 text-body-secondary text-end">
-                <div class="col">
-                    <div><span style="font-size:12px">😀</span><a href="#" style="color:black">chukka</a></div>
-                    <div>
-                        2 days ago
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        }
+    }
 </div>

@@ -18,6 +18,16 @@ namespace Blog_Management_System.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult CreateForum()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
