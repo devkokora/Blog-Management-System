@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class removeStatuses : Migration
+    public partial class addStatus5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,7 +65,6 @@ namespace Blog_Management_System.Migrations
                     Like = table.Column<int>(type: "int", nullable: false),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoriesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StatusesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -160,37 +159,13 @@ namespace Blog_Management_System.Migrations
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
-                    { 1, "alien" },
-                    { 2, "ufo" },
-                    { 3, "dog" },
-                    { 4, "cat" },
-                    { 5, "nasa" },
-                    { 6, "zombie" }
+                    { 1, "Alien" },
+                    { 2, "UFO" },
+                    { 3, "Dog" },
+                    { 4, "Cat" },
+                    { 5, "Nasa" },
+                    { 6, "Zombie" }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Created_at", "Role", "Username" },
-                values: new object[,]
-                {
-                    { 1, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6237), "admin", "chukka" },
-                    { 2, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6238), "user", "otto" },
-                    { 3, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6239), "user", "Juijui" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Forums",
-                columns: new[] { "ForumId", "Body", "CategoriesId", "Created_at", "Like", "StatusesId", "Title", "UserId" },
-                values: new object[,]
-                {
-                    { 1, "hello", null, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6207), 3, null, "I found alien last year", 1 },
-                    { 2, "...", null, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6216), 18, null, "Hello from another world", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Comments",
-                columns: new[] { "CommentId", "Body", "ForumId", "Like", "UserId" },
-                values: new object[] { 1, "wtf..", 1, 2, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryForum_ForumsForumId",

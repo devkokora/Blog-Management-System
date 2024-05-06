@@ -50,16 +50,6 @@ namespace Blog_Management_System.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Comments");
-
-                    b.HasData(
-                        new
-                        {
-                            CommentId = 1,
-                            Body = "wtf..",
-                            ForumId = 1,
-                            Like = 2,
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Blog_Management_System.Models.Forum", b =>
@@ -83,9 +73,6 @@ namespace Blog_Management_System.Migrations
                     b.Property<int>("Like")
                         .HasColumnType("int");
 
-                    b.Property<string>("StatusesId")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -98,26 +85,6 @@ namespace Blog_Management_System.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Forums");
-
-                    b.HasData(
-                        new
-                        {
-                            ForumId = 1,
-                            Body = "hello",
-                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6207),
-                            Like = 3,
-                            Title = "I found alien last year",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            ForumId = 2,
-                            Body = "...",
-                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6216),
-                            Like = 18,
-                            Title = "Hello from another world",
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("Blog_Management_System.Models.Tags.Category", b =>
@@ -140,32 +107,32 @@ namespace Blog_Management_System.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "alien"
+                            Name = "Alien"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "ufo"
+                            Name = "UFO"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "dog"
+                            Name = "Dog"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "cat"
+                            Name = "Cat"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "nasa"
+                            Name = "Nasa"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "zombie"
+                            Name = "Zombie"
                         });
                 });
 
@@ -208,29 +175,6 @@ namespace Blog_Management_System.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6237),
-                            Role = "admin",
-                            Username = "chukka"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6238),
-                            Role = "user",
-                            Username = "otto"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6239),
-                            Role = "user",
-                            Username = "Juijui"
-                        });
                 });
 
             modelBuilder.Entity("CategoryForum", b =>

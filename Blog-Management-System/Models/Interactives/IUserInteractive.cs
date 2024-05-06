@@ -4,5 +4,6 @@
     {
         User? GetUserByUserName(string? username);
         User? CreateUser(string? username);
+        List<User>? GetAllUser();
     }
 }

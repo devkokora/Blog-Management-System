@@ -43,9 +43,16 @@ public class ForumInteractive : IForumInteractive
             if (Forums.Any(f => f.ForumId == forum.ForumId)
             && (forum.UserId == User.Id || User.Role == "admin"))
             {
-                _blogManagementSystemDbContext.Entry(forum).State = EntityState.Detached;
-                _blogManagementSystemDbContext.Forums.Update(forum);
-                _blogManagementSystemDbContext.SaveChanges();
+                //var temp = _blogManagementSystemDbContext.Forums.Find(forum.ForumId);
+                //if (temp is not null)
+                //{
+                //    temp.Title = forum.Title;
+                //    temp.Body = forum.Body;
+                //    temp.Categories = [.. forum.Categories];
+                //}
+                //_blogManagementSystemDbContext.Entry(forum).State = EntityState.Detached;
+                //_blogManagementSystemDbContext.Forums.Update(forum);
+                //_blogManagementSystemDbContext.SaveChanges();
             }
         }
     }

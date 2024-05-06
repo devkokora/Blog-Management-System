@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IForumInteractive, ForumInteractive>();
 builder.Services.AddScoped<IUserInteractive, UserInteractive>();
+builder.Services.AddScoped<ICategoryInteractive, CategoryInteractive>();
+builder.Services.AddScoped<IStatusInteractive, StatusInteractive>();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 

@@ -36,89 +36,89 @@ public class BlogManagementSystemDbContext : DbContext
             .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Category>().HasData(
-            new Category()
-            {
-                Id = 1,
-                Name = "alien"
-            },
-            new Category()
-            {
-                Id = 2,
-                Name = "ufo"
-            },
-            new Category()
-            {
-                Id = 3,
-                Name = "dog"
-            },
-            new Category()
-            {
-                Id = 4,
-                Name = "cat"
-            },
-            new Category()
-            {
-                Id = 5,
-                Name = "nasa"
-            },
-            new Category()
-            {
-                Id = 6,
-                Name = "zombie"
-            });
+             new Category()
+             {
+                 Id = 1,
+                 Name = "Alien"
+             },
+             new Category()
+             {
+                 Id = 2,
+                 Name = "UFO"
+             },
+             new Category()
+             {
+                 Id = 3,
+                 Name = "Dog"
+             },
+             new Category()
+             {
+                 Id = 4,
+                 Name = "Cat"
+             },
+             new Category()
+             {
+                 Id = 5,
+                 Name = "Nasa"
+             },
+             new Category()
+             {
+                 Id = 6,
+                 Name = "Zombie"
+             });
 
-        modelBuilder.Entity<Comment>().HasData(
-            new Comment()
-            {
-                CommentId = 1,
-                Body = "wtf..",
-                ForumId = 1,
-                Like = 2,
-                UserId = 2,
-            });
+        //modelBuilder.Entity<Comment>().HasData(
+        //    new Comment()
+        //    {
+        //        CommentId = 1,
+        //        Body = "wtf..",
+        //        ForumId = 1,
+        //        Like = 2,
+        //        UserId = 2,
+        //    });
 
-        modelBuilder.Entity<Forum>().HasData(
-            new Forum()
-            {
-                ForumId = 1,
-                Title = "I found alien last year",
-                Body = "hello",
-                Like = 3,
-                Created_at = DateTime.Now,
-                UserId = 1,
-            },
-            new Forum()
-            {
-                ForumId = 2,
-                Title = "Hello from another world",
-                Body = "...",
-                Like = 18,
-                Created_at = DateTime.Now,
-                UserId = 2,
-            });
+        //modelBuilder.Entity<Forum>().HasData(
+        //    new Forum()
+        //    {
+        //        ForumId = 1,
+        //        Title = "I found alien last year",
+        //        Body = "hello",
+        //        Like = 3,
+        //        Created_at = DateTime.Now,
+        //        UserId = 1,
+        //    },
+        //    new Forum()
+        //    {
+        //        ForumId = 2,
+        //        Title = "Hello from another world",
+        //        Body = "...",
+        //        Like = 18,
+        //        Created_at = DateTime.Now,
+        //        UserId = 2,
+        //    });
 
-        modelBuilder.Entity<User>().HasData(
-            new User()
-            {
-                Id = 1,
-                Username = "chukka",
-                Role = "admin",
-                Created_at = DateTime.Now
-            },
-            new User()
-            {
-                Id = 2,
-                Username = "otto",
-                Role = "user",
-                Created_at = DateTime.Now
-            },
-            new User()
-            {
-                Id = 3,
-                Username = "Juijui",
-                Role = "user",
-                Created_at = DateTime.Now
-            });
+        //modelBuilder.Entity<User>().HasData(
+        //    new User()
+        //    {
+        //        Id = 1,
+        //        Username = "chukka",
+        //        Role = "admin",
+        //        Created_at = DateTime.Now
+        //    },
+        //    new User()
+        //    {
+        //        Id = 2,
+        //        Username = "otto",
+        //        Role = "user",
+        //        Created_at = DateTime.Now
+        //    },
+        //    new User()
+        //    {
+        //        Id = 3,
+        //        Username = "Juijui",
+        //        Role = "user",
+        //        Created_at = DateTime.Now
+        //    });
     }
 
 }

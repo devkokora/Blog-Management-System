@@ -37,5 +37,7 @@
             else
                 return null;
         }
+
+        public List<User>? GetAllUser() => _blogManagementSystemDbContext.Users.ToList();
     }
 }
