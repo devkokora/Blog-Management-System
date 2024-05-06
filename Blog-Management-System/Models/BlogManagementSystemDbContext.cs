@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Blog_Management_System.Models.Tags;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog_Management_System.Models;
 
@@ -7,7 +8,6 @@ public class BlogManagementSystemDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Forum> Forums { get; set; }
     public DbSet<Comment> Comments { get; set; }
-    public DbSet<Status> Statuses { get; set; }
     public DbSet<Category> Categories { get; set; }
     public BlogManagementSystemDbContext(DbContextOptions<BlogManagementSystemDbContext> options) : base(options)
     {
@@ -35,48 +35,36 @@ public class BlogManagementSystemDbContext : DbContext
             .HasForeignKey(f => f.UserId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Status>().HasData(
-            new Status()
-            {
-                StatusId = 1,
-                StatusName = "Hot",
-            },
-            new Status()
-            {
-                StatusId = 2,
-                StatusName = "New",
-            });
-
         modelBuilder.Entity<Category>().HasData(
             new Category()
             {
-                CategoryId = 1,
-                CategoryName = "alien"
+                Id = 1,
+                Name = "alien"
             },
             new Category()
             {
-                CategoryId = 2,
-                CategoryName = "ufo"
+                Id = 2,
+                Name = "ufo"
             },
             new Category()
             {
-                CategoryId = 3,
-                CategoryName = "dog"
+                Id = 3,
+                Name = "dog"
             },
             new Category()
             {
-                CategoryId = 4,
-                CategoryName = "cat"
+                Id = 4,
+                Name = "cat"
             },
             new Category()
             {
-                CategoryId = 5,
-                CategoryName = "nasa"
+                Id = 5,
+                Name = "nasa"
             },
             new Category()
             {
-                CategoryId = 6,
-                CategoryName = "zombie"
+                Id = 6,
+                Name = "zombie"
             });
 
         modelBuilder.Entity<Comment>().HasData(

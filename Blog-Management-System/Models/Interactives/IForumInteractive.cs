@@ -1,4 +1,6 @@
-﻿namespace Blog_Management_System.Models
+﻿using Blog_Management_System.Models.Tags;
+
+namespace Blog_Management_System.Models.Interactives
 {
     public interface IForumInteractive
     {
@@ -8,7 +10,7 @@
         void EditForum(Forum forum);
         void RemoveForum(int? id);
         List<Forum>? GetAllForums();
-        List<Forum>? GetForumsByDetails(List<Status> statuses, List<Category> categories);
+        List<Forum>? GetForumsByTags(List<Status> statuses, List<Category> categories);
         List<Forum>? GetForumsByUserId(int userId);
     }
 }

@@ -6,6 +6,7 @@ namespace Blog_Management_System.ViewModels
     {
         public User? User { get; set; }
         public List<Forum>? Forums { get; }
+        public Forum Forum { get; set; } = new();
         public HomeViewModels(List<Forum>? forums, User? user)
         {
             Forums = forums;

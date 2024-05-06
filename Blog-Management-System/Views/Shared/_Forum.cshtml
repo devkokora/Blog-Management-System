@@ -12,14 +12,14 @@
                         {
                             foreach (var status in forum.Statuses)
                             {
-                                <span class="col-auto me-1 badge rounded-pill bg-danger">@status.StatusName</span>
+                                <span class="col-auto me-1 badge rounded-pill bg-danger">@status.Name</span>
                             }
                         }
                         @if (forum.Categories is not null)
                         {
                             foreach (var category in forum.Categories)
                             {
-                                <span class="col-auto me-1 badge rounded-pill bg-warning text-dark">@category.CategoryName</span>
+                                <span class="col-auto me-1 badge rounded-pill bg-warning text-dark">@category.Name</span>
                             }
                         }
                     </div>

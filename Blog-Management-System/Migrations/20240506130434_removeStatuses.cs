@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class firstInit : Migration
+    public partial class removeStatuses : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,26 +17,26 @@ namespace Blog_Management_System.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Statuses",
+                name: "Status",
                 columns: table => new
                 {
-                    StatusId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StatusName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Statuses", x => x.StatusId);
+                    table.PrimaryKey("PK_Status", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,6 +64,8 @@ namespace Blog_Management_System.Migrations
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Like = table.Column<int>(type: "int", nullable: false),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoriesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StatusesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -81,17 +83,17 @@ namespace Blog_Management_System.Migrations
                 name: "CategoryForum",
                 columns: table => new
                 {
-                    CategoriesCategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoriesId = table.Column<int>(type: "int", nullable: false),
                     ForumsForumId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryForum", x => new { x.CategoriesCategoryId, x.ForumsForumId });
+                    table.PrimaryKey("PK_CategoryForum", x => new { x.CategoriesId, x.ForumsForumId });
                     table.ForeignKey(
-                        name: "FK_CategoryForum_Categories_CategoriesCategoryId",
-                        column: x => x.CategoriesCategoryId,
+                        name: "FK_CategoryForum_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CategoryForum_Forums_ForumsForumId",
@@ -134,11 +136,11 @@ namespace Blog_Management_System.Migrations
                 columns: table => new
                 {
                     ForumsForumId = table.Column<int>(type: "int", nullable: false),
-                    StatusesStatusId = table.Column<int>(type: "int", nullable: false)
+                    StatusesId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ForumStatus", x => new { x.ForumsForumId, x.StatusesStatusId });
+                    table.PrimaryKey("PK_ForumStatus", x => new { x.ForumsForumId, x.StatusesId });
                     table.ForeignKey(
                         name: "FK_ForumStatus_Forums_ForumsForumId",
                         column: x => x.ForumsForumId,
@@ -146,16 +148,16 @@ namespace Blog_Management_System.Migrations
                         principalColumn: "ForumId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ForumStatus_Statuses_StatusesStatusId",
-                        column: x => x.StatusesStatusId,
-                        principalTable: "Statuses",
-                        principalColumn: "StatusId",
+                        name: "FK_ForumStatus_Status_StatusesId",
+                        column: x => x.StatusesId,
+                        principalTable: "Status",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryId", "CategoryName" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "alien" },
@@ -167,23 +169,28 @@ namespace Blog_Management_System.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Statuses",
-                columns: new[] { "StatusId", "StatusName" },
-                values: new object[,]
-                {
-                    { 1, "Hot" },
-                    { 2, "New" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Created_at", "Role", "Username" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6785), "admin", "chukka" },
-                    { 2, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6793), "user", "otto" },
-                    { 3, new DateTime(2024, 5, 5, 23, 13, 14, 90, DateTimeKind.Local).AddTicks(6794), "user", "Juijui" }
+                    { 1, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6237), "admin", "chukka" },
+                    { 2, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6238), "user", "otto" },
+                    { 3, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6239), "user", "Juijui" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Forums",
+                columns: new[] { "ForumId", "Body", "CategoriesId", "Created_at", "Like", "StatusesId", "Title", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "hello", null, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6207), 3, null, "I found alien last year", 1 },
+                    { 2, "...", null, new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6216), 18, null, "Hello from another world", 2 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Comments",
+                columns: new[] { "CommentId", "Body", "ForumId", "Like", "UserId" },
+                values: new object[] { 1, "wtf..", 1, 2, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryForum_ForumsForumId",
@@ -206,9 +213,9 @@ namespace Blog_Management_System.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ForumStatus_StatusesStatusId",
+                name: "IX_ForumStatus_StatusesId",
                 table: "ForumStatus",
-                column: "StatusesStatusId");
+                column: "StatusesId");
         }
 
         /// <inheritdoc />
@@ -230,7 +237,7 @@ namespace Blog_Management_System.Migrations
                 name: "Forums");
 
             migrationBuilder.DropTable(
-                name: "Statuses");
+                name: "Status");
 
             migrationBuilder.DropTable(
                 name: "Users");

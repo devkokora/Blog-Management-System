@@ -1,4 +1,5 @@
 using Blog_Management_System.Models;
+using Blog_Management_System.Models.Interactives;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

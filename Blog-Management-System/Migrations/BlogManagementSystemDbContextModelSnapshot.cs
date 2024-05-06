@@ -22,54 +22,6 @@ namespace Blog_Management_System.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Blog_Management_System.Models.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
-
-                    b.Property<string>("CategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CategoryId");
-
-                    b.ToTable("Categories");
-
-                    b.HasData(
-                        new
-                        {
-                            CategoryId = 1,
-                            CategoryName = "alien"
-                        },
-                        new
-                        {
-                            CategoryId = 2,
-                            CategoryName = "ufo"
-                        },
-                        new
-                        {
-                            CategoryId = 3,
-                            CategoryName = "dog"
-                        },
-                        new
-                        {
-                            CategoryId = 4,
-                            CategoryName = "cat"
-                        },
-                        new
-                        {
-                            CategoryId = 5,
-                            CategoryName = "nasa"
-                        },
-                        new
-                        {
-                            CategoryId = 6,
-                            CategoryName = "zombie"
-                        });
-                });
-
             modelBuilder.Entity("Blog_Management_System.Models.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -122,11 +74,17 @@ namespace Blog_Management_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CategoriesId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Created_at")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Like")
                         .HasColumnType("int");
+
+                    b.Property<string>("StatusesId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -146,7 +104,7 @@ namespace Blog_Management_System.Migrations
                         {
                             ForumId = 1,
                             Body = "hello",
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2064),
+                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6207),
                             Like = 3,
                             Title = "I found alien last year",
                             UserId = 1
@@ -155,40 +113,77 @@ namespace Blog_Management_System.Migrations
                         {
                             ForumId = 2,
                             Body = "...",
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2075),
+                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6216),
                             Like = 18,
                             Title = "Hello from another world",
                             UserId = 2
                         });
                 });
 
-            modelBuilder.Entity("Blog_Management_System.Models.Status", b =>
+            modelBuilder.Entity("Blog_Management_System.Models.Tags.Category", b =>
                 {
-                    b.Property<int>("StatusId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("StatusName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("StatusId");
+                    b.HasKey("Id");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
-                            StatusId = 1,
-                            StatusName = "Hot"
+                            Id = 1,
+                            Name = "alien"
                         },
                         new
                         {
-                            StatusId = 2,
-                            StatusName = "New"
+                            Id = 2,
+                            Name = "ufo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "dog"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "cat"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "nasa"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "zombie"
                         });
+                });
+
+            modelBuilder.Entity("Blog_Management_System.Models.Tags.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status");
                 });
 
             modelBuilder.Entity("Blog_Management_System.Models.User", b =>
@@ -218,21 +213,21 @@ namespace Blog_Management_System.Migrations
                         new
                         {
                             Id = 1,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2094),
+                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6237),
                             Role = "admin",
                             Username = "chukka"
                         },
                         new
                         {
                             Id = 2,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2095),
+                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6238),
                             Role = "user",
                             Username = "otto"
                         },
                         new
                         {
                             Id = 3,
-                            Created_at = new DateTime(2024, 5, 5, 23, 16, 22, 222, DateTimeKind.Local).AddTicks(2096),
+                            Created_at = new DateTime(2024, 5, 6, 20, 4, 34, 397, DateTimeKind.Local).AddTicks(6239),
                             Role = "user",
                             Username = "Juijui"
                         });
@@ -240,13 +235,13 @@ namespace Blog_Management_System.Migrations
 
             modelBuilder.Entity("CategoryForum", b =>
                 {
-                    b.Property<int>("CategoriesCategoryId")
+                    b.Property<int>("CategoriesId")
                         .HasColumnType("int");
 
                     b.Property<int>("ForumsForumId")
                         .HasColumnType("int");
 
-                    b.HasKey("CategoriesCategoryId", "ForumsForumId");
+                    b.HasKey("CategoriesId", "ForumsForumId");
 
                     b.HasIndex("ForumsForumId");
 
@@ -258,12 +253,12 @@ namespace Blog_Management_System.Migrations
                     b.Property<int>("ForumsForumId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StatusesStatusId")
+                    b.Property<int>("StatusesId")
                         .HasColumnType("int");
 
-                    b.HasKey("ForumsForumId", "StatusesStatusId");
+                    b.HasKey("ForumsForumId", "StatusesId");
 
-                    b.HasIndex("StatusesStatusId");
+                    b.HasIndex("StatusesId");
 
                     b.ToTable("ForumStatus");
                 });
@@ -300,9 +295,9 @@ namespace Blog_Management_System.Migrations
 
             modelBuilder.Entity("CategoryForum", b =>
                 {
-                    b.HasOne("Blog_Management_System.Models.Category", null)
+                    b.HasOne("Blog_Management_System.Models.Tags.Category", null)
                         .WithMany()
-                        .HasForeignKey("CategoriesCategoryId")
+                        .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -321,9 +316,9 @@ namespace Blog_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Blog_Management_System.Models.Status", null)
+                    b.HasOne("Blog_Management_System.Models.Tags.Status", null)
                         .WithMany()
-                        .HasForeignKey("StatusesStatusId")
+                        .HasForeignKey("StatusesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
