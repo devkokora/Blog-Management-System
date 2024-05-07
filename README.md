@@ -14,8 +14,8 @@
 5. **Search Functionality**
    - ⚫ Implement a search box to find articles by keywords.
    - ⚫ filter by status and/or category
-6. **Other feature**
-   - ⚫ Users can rate the forum.
+6. **Other Feature**
+   - ⚫ Users can rate Blogs and comments.
    - 🟢 Blog feature eg.category ..
 
 ![Alt text](https://github.com/devkokora/Blog-Management-System/blob/master/pics/dbdiagram_v2.png)
