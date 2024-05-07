@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class addStatus5 : Migration
+    public partial class addcommentId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,6 +65,7 @@ namespace Blog_Management_System.Migrations
                     Like = table.Column<int>(type: "int", nullable: false),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoriesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CommentsId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

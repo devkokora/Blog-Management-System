@@ -13,9 +13,9 @@ public class Forum
     public string Body { get; set; } = string.Empty;
     public int Like { get; set; }
     public DateTime Created_at { get; set; }
+    public List<Status>? Statuses { get; set; }
     public List<int>? CategoriesId { get; set; }
     public List<Category>? Categories { get; set; }
-    public List<Status>? Statuses { get; set; }
     public List<Comment>? Comments { get; set; }
     public int UserId { get; set; }
 
