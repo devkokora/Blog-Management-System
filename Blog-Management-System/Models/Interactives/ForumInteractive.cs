@@ -40,8 +40,7 @@ public class ForumInteractive : IForumInteractive
     {
         if (User is not null && Forums is not null)
         {
-            if (Forums.Any(f => f.ForumId == forum.ForumId)
-            && (forum.UserId == User.Id || User.Role == "admin"))
+            if (Forums.Any(f => f.ForumId == forum.ForumId))
             {
                 //var temp = _blogManagementSystemDbContext.Forums.Find(forum.ForumId);
                 //if (temp is not null)
@@ -50,16 +49,16 @@ public class ForumInteractive : IForumInteractive
                 //    temp.Body = forum.Body;
                 //    temp.Categories = [.. forum.Categories];
                 //}
-                //_blogManagementSystemDbContext.Entry(forum).State = EntityState.Detached;
-                //_blogManagementSystemDbContext.Forums.Update(forum);
-                //_blogManagementSystemDbContext.SaveChanges();
+                _blogManagementSystemDbContext.Entry(forum).State = EntityState.Detached;
+                _blogManagementSystemDbContext.Forums.Update(forum);
+                _blogManagementSystemDbContext.SaveChanges();
             }
         }
     }
 
     public List<Forum>? GetAllForums()
     {
-        Forums = [.. _blogManagementSystemDbContext.Forums];
+        Forums = [.. _blogManagementSystemDbContext.Forums.Include(f => f.Comments).ToList()];
         return Forums;
     }
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_Management_System.Migrations
 {
     [DbContext(typeof(BlogManagementSystemDbContext))]
-    [Migration("20240506181529_addStatus5")]
-    partial class addStatus5
+    [Migration("20240507232801_remove-CommentId")]
+    partial class removeCommentId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

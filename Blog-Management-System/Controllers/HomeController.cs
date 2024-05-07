@@ -209,8 +209,17 @@ public class HomeController : Controller
                 Comments = forum.Comments ??= [],
                 UserId = forum.UserId,
             };
-            _forumInteractive.RemoveForum(forum.ForumId);
-            _forumInteractive.CreateForum(temp);
+
+            if (_forumInteractive.Forums is not null && _forumInteractive.User is not null)
+            {
+                if (_forumInteractive.Forums.Any(f => f.ForumId == forum.ForumId)
+                && (forum.UserId == _forumInteractive.User.Id
+                || _forumInteractive.User.Role == "admin"))
+                {
+                    _forumInteractive.RemoveForum(forum.ForumId);
+                    _forumInteractive.CreateForum(temp);
+                }
+            }
             return RedirectToAction("Index");
         }
         return View(forum);
@@ -234,16 +243,22 @@ public class HomeController : Controller
             if (comment.Body != string.Empty && _forumInteractive.User is not null)
             {
                 comment.UserId = _forumInteractive.User.Id;
-                comment.User = _forumInteractive.User;
+
                 if (_forumInteractive.Forums is not null)
-                    comment.Forum = _forumInteractive.Forums.First(ff => ff.ForumId == comment.ForumId);
+                {
+                    var forum = _forumInteractive.Forums.First(ff => ff.ForumId == comment.ForumId);
+                    comment.Forum = forum;                                      
 
-                var forum = comment.Forum;
-                forum.Comments ??= [];
-                forum.Comments.Add(comment);
+                    _commentInteractive.Create(comment);
 
-                _commentInteractive.Create(comment);
+                    /* used Include method on _forumInteractive.GetAllForum() to get behavior of JOIN SQL
+                    forum.Comments ??= [];
+                    forum.CommentsId ??= [];
+                    forum.CommentsId.Add(comment.CommentId);
+                    forum.Comments.Add(comment);
 
+                    _forumInteractive.EditForum(forum);*/
+                }
                 return NoContent();
             }
         }

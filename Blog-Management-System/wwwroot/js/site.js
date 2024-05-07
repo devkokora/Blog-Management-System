@@ -60,6 +60,6 @@ for (let i = 0; i < openedModals.length; i++) {
         }
         setTimeout(function () {
             $(`#${getModalShowId}`).modal('show');
-        }, 400);
+        }, 2000);
     });
 }

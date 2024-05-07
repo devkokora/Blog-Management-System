@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_Management_System.Migrations
 {
     [DbContext(typeof(BlogManagementSystemDbContext))]
-    [Migration("20240507220336_nd")]
-    partial class nd
+    [Migration("20240507221946_addcommentId")]
+    partial class addcommentId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,6 +68,9 @@ namespace Blog_Management_System.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CategoriesId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CommentsId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Created_at")
