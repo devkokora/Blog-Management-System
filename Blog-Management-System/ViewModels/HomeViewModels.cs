@@ -9,6 +9,7 @@ public class HomeViewModels
     public List<Forum>? Forums { get; }
     public Forum? Forum { get; set; } = new();
     public ForumMetaData MetaData { get; set; } = new();
+    public Comment Comment { get; set; } = new();
     public HomeViewModels(List<Forum>? forums, List<User>? users, User? user, Forum? forum)
     {
         Forums = forums;

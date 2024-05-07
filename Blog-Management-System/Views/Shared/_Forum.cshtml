@@ -42,14 +42,14 @@
                         <h6><strong>@forum.Title</strong></h6>
                         <div class="align-items-center">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-outline-dark border-0" data-bs-toggle="modal" data-bs-target="#@forum.Title[0]">
+                            <button type="button" class="btn btn-outline-dark border-0" data-bs-toggle="modal" data-bs-target="#@($"{forum.Title.Trim()}OpenedModal")">
                                 🕳
                             </button>
                         </div>
                     </div>
                     <div class="col-2 text-body-secondary text-end">
                         <div class="col">
-                            <div><span style="font-size:12px">😀</span><a href="#" style="color:black">@(Model.Users.First(us => us.Id == forum.UserId).Username)</a></div>
+                            <div><span style="font-size:12px">😀</span><a href="#" style="color:black">@(Model.Users?.First(us => us.Id == forum.UserId).Username)</a></div>
                             <div class="text-black-50" style="font-size: 13px">
                                 @if ((DateTime.Now.Date - forum.Created_at.Date).Days > 7)
                                 {
@@ -82,7 +82,7 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="@forum.Title[0]" tabindex="-1" aria-labelledby="111ModalLabel" aria-hidden="true">
+            <div class="modal fade modal-trigger" id="@($"{forum.Title.Trim()}OpenedModal")" tabindex="-1" aria-labelledby="111ModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content bg-success bg-opacity-75">
                         <div class="modal-header">
@@ -122,42 +122,51 @@
                     </div>
                 </div>
 
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content bg-success bg-opacity-75">
-                        <div class="modal-body bg-dark text-white">
-                            <div class="row">
-                                <div class="col-1 text-center text-danger">
-                                    <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
-                                    <br />
-                                    1223
-                                </div>
-                                <div class="col-9 ms-auto bg-black">
-                                    The crew of a commercial.
-                                </div>
-                                <div class="col-2 ms-auto text-end">
-                                    👽<a href="#">otto</a>
-                                    <br />
-                                    2 mins ago
+                @if (forum.Comments is not null)
+                {
+                    foreach(var comment in forum.Comments)
+                    {
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content bg-success bg-opacity-75">
+                                <div class="modal-body bg-dark text-white">
+                                    <div class="row">
+                                        <div class="col-1 text-center text-danger">
+                                            <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
+                                            <br />
+                                            @comment.Like
+                                        </div>
+                                        <div class="col-9 ms-auto bg-black">
+                                            @comment.Body
+                                        </div>
+                                        <div class="col-2 ms-auto text-end">
+                                            👽<a href="#">@comment.User.Username</a>
+                                            <br />
+                                            💌
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
+                    }
+
+                }
+            <form asp-action="PostComment" method="post" class="comment-footer bg-opacity-50">
+                <input type="hidden" asp-for="@forum.ForumId" name="ForumId" />
+                @*<input type="hidden" name="homeViewModels" value="@(JsonSerializer.Serialize(Model, new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve }))" />*@
+
+                <div class="main-wrapper">
+                    <label for="textarea-@(forum.Title)" class="form-label modal-footer-textarea-label"></label>
+                    <textarea name="body" class="modal-footer-textarea aqweeee" id="textarea-@(forum.Title)" rows="5" placeholder="Text here.."></textarea>
+                    <p class="loader"></p>
+
+                    <div class="noise-wrapper bg-dark">
+                        <div class="noise">
+                            <div class="modal-footer-textarea loader"></div>
                         </div>
                     </div>
                 </div>
-
-                <form class="comment-footer bg-opacity-50">
-                    <div class="main-wrapper">
-                        <label for="textarea_@(forum.ForumId)" class="form-label modal-footer-textarea-label"></label>
-                        <textarea class="modal-footer-textarea" id="textarea_@(forum.ForumId)" rows="5" placeholder="Text here.."></textarea>
-                        <p class="loader"></p>
-
-                        <div class="noise-wrapper bg-dark">
-                            <div class="noise">
-                                <div class="modal-footer-textarea loader"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
-                </form>
+                <button type="submit" class="Opened-Modal modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
+            </form>
             </div>
         </div>
     }
