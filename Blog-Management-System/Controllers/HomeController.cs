@@ -4,7 +4,10 @@ using Blog_Management_System.Models.Tags;
 using Blog_Management_System.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Blog_Management_System.Controllers;
 
@@ -14,17 +17,21 @@ public class HomeController : Controller
     private readonly IUserInteractive _userInteractive;
     private readonly ICategoryInteractive _categoryInteractive;
     private readonly IStatusInteractive _statusInteractive;
+    private readonly ICommentInteractive _commentInteractive;
+
     public HomeController(ILogger<HomeController> logger,
         IForumInteractive forumInteractive,
         IUserInteractive userInteractive,
         ICategoryInteractive categoryInteractive,
         IStatusInteractive statusInteractive,
+        ICommentInteractive commentInteractive,
         IHttpContextAccessor httpContextAccessor)
     {
         _forumInteractive = forumInteractive;
         _userInteractive = userInteractive;
         _categoryInteractive = categoryInteractive;
         _statusInteractive = statusInteractive;
+        _commentInteractive = commentInteractive;
 
         var username = httpContextAccessor?.HttpContext?.Session.GetString("Username");
         if (username is not null)
@@ -217,6 +224,30 @@ public class HomeController : Controller
             return RedirectToAction("Index");
         }
         return NotFound();
+    }
+
+    [HttpPost]
+    public IActionResult PostComment(Comment comment)
+    {
+        if (ModelState.IsValid)
+        {
+            if (comment.Body != string.Empty && _forumInteractive.User is not null)
+            {
+                comment.UserId = _forumInteractive.User.Id;
+                comment.User = _forumInteractive.User;
+                if (_forumInteractive.Forums is not null)
+                    comment.Forum = _forumInteractive.Forums.First(ff => ff.ForumId == comment.ForumId);
+
+                var forum = comment.Forum;
+                forum.Comments ??= [];
+                forum.Comments.Add(comment);
+
+                _commentInteractive.Create(comment);
+
+                return NoContent();
+            }
+        }
+        return RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
