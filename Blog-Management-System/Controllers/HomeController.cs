@@ -48,19 +48,14 @@ public class HomeController : Controller
             var newForums = _statusInteractive.NewStatus;
             var newStatus = _statusInteractive.Statuses[1];
 
-            if (hotForums is not null)
+            foreach (var forum in forums)
             {
-                foreach (var forum in forums)
-                {
-                    UpdateForumStatus(hotForums, hotStatus, forum);
-                }
-            }
-            if (newForums is not null)
-            {
-                foreach (var forum in forums)
-                {
+                if (newForums is not null)
                     UpdateForumStatus(newForums, newStatus, forum);
-                }
+                if (hotForums is not null)
+                    UpdateForumStatus(hotForums, hotStatus, forum);
+                if (forum.CategoriesId is not null)
+                    UpdateForumCategory(forum);
             }
         }
 
@@ -148,17 +143,22 @@ public class HomeController : Controller
 
             if (forum.CategoriesId is not null)
             {
-                forum.Categories = [];
-                foreach (var categoryId in forum.CategoriesId)
-                {
-                    forum.Categories.Add(_categoryInteractive.Categories
-                        .First(c => c.Id == categoryId));
-                }
+                UpdateForumCategory(forum);
             }
             forum.Created_at = DateTime.Now;
             _forumInteractive.CreateForum(forum);
         }
         return RedirectToAction("Index");
+    }
+
+    private void UpdateForumCategory(Forum forum)
+    {
+        forum.Categories = [];
+        foreach (var categoryId in forum.CategoriesId)
+        {
+            forum.Categories.Add(_categoryInteractive.Categories
+                .First(c => c.Id == categoryId));
+        }
     }
 
     public IActionResult EditForum(int? Id)
