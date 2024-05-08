@@ -3,6 +3,7 @@
     public class UserInteractive : IUserInteractive
     {
         private readonly BlogManagementSystemDbContext _blogManagementSystemDbContext;
+        public User? User { get; set; }
 
         public UserInteractive(BlogManagementSystemDbContext blogManagementSystemDbContext)
         {

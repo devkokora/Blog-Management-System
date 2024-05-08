@@ -1,0 +1,17 @@
+﻿@model Forum
+<form asp-action="PostComment" method="post" class="comment-footer bg-opacity-50">
+    <input type="hidden" asp-for="@Model.ForumId" name="ForumId" />
+
+    <div class="main-wrapper">
+        <label for="textarea-@(Model.Title)" class="form-label modal-footer-textarea-label"></label>
+        <textarea name="body" class="modal-footer-textarea aqweeee" id="textarea-@(Model.Title)" rows="5" placeholder="Text here.."></textarea>
+        <p class="loader"></p>
+
+        <div class="noise-wrapper bg-dark">
+            <div class="noise">
+                <div class="modal-footer-textarea loader"></div>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="Opened-Modal modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
+</form>
