@@ -13,15 +13,16 @@ builder.Services.AddScoped<ICommentInteractive, CommentInteractive>();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllersWithViews()
-    .AddJsonOptions(options =>
-     {
-         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-     });
+builder.Services.AddControllersWithViews();
+    //.AddJsonOptions(options =>
+    // {
+    //     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    // });
 
 builder.Services.AddDbContext<BlogManagementSystemDbContext>(options =>
     {
         options.UseSqlServer(builder.Configuration.GetConnectionString("BlogManagementSystemDbContextConnection"));
+        options.EnableSensitiveDataLogging();
     }
 );
 
