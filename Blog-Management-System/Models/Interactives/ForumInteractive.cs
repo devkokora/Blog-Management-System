@@ -15,23 +15,23 @@ public class ForumInteractive : IForumInteractive
 
     public void CreateForum(Forum forum)
     {
+        forum.Created_at = DateTime.Now;
+        UpdateForumCategory(forum);
+
         _blogManagementSystemDbContext.Forums.Add(forum);
-
-        var categories = forum.Categories;
-
-        if (categories is not null)
-        {
-            foreach (var category in categories)
-            {
-                if (category.Forums is null)
-                {
-                    category.Forums = [];
-                }
-                category.Forums.Add(forum);
-            }
-        }
-
         _blogManagementSystemDbContext.SaveChanges();
+    }
+
+    private void UpdateForumCategory(Forum forum)
+    {
+        if (forum.CategoriesId is not null)
+        {
+            forum.Categories = [];
+            var categories = _blogManagementSystemDbContext.Categories.ToList();
+
+            forum.CategoriesId.ForEach(categoryId =>
+            forum.Categories.Add(categories.First(c => c.Id == categoryId)));
+        }
     }
 
     public void EditForum(Forum forum)
@@ -53,7 +53,9 @@ public class ForumInteractive : IForumInteractive
 
     public List<Forum>? GetAllForums()
     {
-        Forums = [.. _blogManagementSystemDbContext.Forums.Include(f => f.Comments)];
+        Forums = [.. _blogManagementSystemDbContext.Forums
+            .Include(f => f.Comments)
+            .Include(f => f.Categories)];
         return Forums;
     }
 

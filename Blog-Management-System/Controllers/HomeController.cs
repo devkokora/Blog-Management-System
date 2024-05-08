@@ -59,8 +59,6 @@ public class HomeController : Controller
                     UpdateForumStatus(newForums, newStatus, forum);
                 if (hotForums is not null)
                     UpdateForumStatus(hotForums, hotStatus, forum);
-                if (forum.CategoriesId is not null)
-                    UpdateForumCategory(forum);
             }
         }
 
@@ -143,27 +141,13 @@ public class HomeController : Controller
             return View();
         else
         {
-            forum.User = _userInteractive.User;
-
-            if (forum.CategoriesId is not null)
-            {
-                UpdateForumCategory(forum);
-            }
-            forum.Created_at = DateTime.Now;
+            forum.User = _userInteractive.User; 
             _forumInteractive.CreateForum(forum);
         }
         return RedirectToAction("Index");
     }
 
-    private void UpdateForumCategory(Forum forum)
-    {
-        forum.Categories = [];
-        foreach (var categoryId in forum.CategoriesId)
-        {
-            forum.Categories.Add(_categoryInteractive.Categories
-                .First(c => c.Id == categoryId));
-        }
-    }
+    
 
     public IActionResult EditForum(int? Id)
     {
