@@ -35,7 +35,7 @@ public class HomeController : Controller
         if (username is not null)
         {
             var user = _userInteractive.GetUserByUserName(username);
-            _userInteractive.User= user;
+            _userInteractive.User = user;
         }
 
         _forumInteractive.Forums = _forumInteractive.GetAllForums();

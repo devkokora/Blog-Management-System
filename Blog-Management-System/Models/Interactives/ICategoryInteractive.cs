@@ -5,6 +5,6 @@ namespace Blog_Management_System.Models.Interactives
     public interface ICategoryInteractive
     {
         List<Category> Categories { get; set; }
-        void LoadCategory();
+        void UpdateCategories();
     }
 }
