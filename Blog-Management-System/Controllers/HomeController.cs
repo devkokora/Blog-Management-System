@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Blog_Management_System.Controllers;
 
@@ -37,7 +35,7 @@ public class HomeController : Controller
         if (username is not null)
         {
             var user = _userInteractive.GetUserByUserName(username);
-            _forumInteractive.User = user;
+            _userInteractive.User= user;
         }
 
         _forumInteractive.Forums = _forumInteractive.GetAllForums();
@@ -66,14 +64,14 @@ public class HomeController : Controller
             }
         }
 
-        if (_forumInteractive.User is null)
+        if (_userInteractive.User is null)
         {
             var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), null, null);
             return View(viewmodels);
         }
         else
         {
-            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), _forumInteractive.User, null);
+            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), _userInteractive.User, null);
             return View(viewmodels);
         }
     }
@@ -97,21 +95,20 @@ public class HomeController : Controller
         }
     }
 
-    [HttpPost]
     public IActionResult Login(string? username)
     {
         if (username is not null)
         {
-            _forumInteractive.User = new User();
+            _userInteractive.User = new User();
             var user = _userInteractive.GetUserByUserName(username);
             if (user is not null)
             {
-                _forumInteractive.User = user;
+                _userInteractive.User= user;
             }
             else
             {
                 user = _userInteractive.CreateUser(username);
-                _forumInteractive.User = user;
+                _userInteractive.User= user;
             }
 
             HttpContext.Session.SetString("Username", user!.Username);
@@ -127,14 +124,14 @@ public class HomeController : Controller
 
     public IActionResult CreateForum()
     {
-        if (_forumInteractive.User is null)
+        if (_userInteractive.User is null)
         {
             var viewmodels = new HomeViewModels(null, null, null, null);
             return View(viewmodels);
         }
         else
         {
-            var viewmodels = new HomeViewModels(null, _userInteractive.GetAllUser(), _forumInteractive.User, null);
+            var viewmodels = new HomeViewModels(null, _userInteractive.GetAllUser(), _userInteractive.User, null);
             return View(viewmodels);
         }
     }
@@ -142,11 +139,11 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult CreateForum(Forum forum)
     {
-        if (_forumInteractive.User is null)
+        if (_userInteractive.User is null)
             return View();
         else
         {
-            forum.User = _forumInteractive.User;
+            forum.User = _userInteractive.User;
 
             if (forum.CategoriesId is not null)
             {
@@ -177,7 +174,7 @@ public class HomeController : Controller
         if (forum is null)
             return NotFound();
 
-        var viewmodels = new HomeViewModels(null, null, _forumInteractive.User, forum);
+        var viewmodels = new HomeViewModels(null, null, _userInteractive.User, forum);
 
         return View(viewmodels);
     }
@@ -197,27 +194,13 @@ public class HomeController : Controller
                 }
             }
 
-            var temp = new Forum
+            if (_forumInteractive.Forums is not null && _userInteractive.User is not null)
             {
-                Title = forum.Title,
-                Body = forum.Body,
-                Like = forum.Like,
-                Created_at = DateTime.Now,
-                CategoriesId = forum.CategoriesId ??= [],
-                Categories = forum.Categories ??= [],
-                Statuses = forum.Statuses ??= [],
-                Comments = forum.Comments ??= [],
-                UserId = forum.UserId,
-            };
-
-            if (_forumInteractive.Forums is not null && _forumInteractive.User is not null)
-            {
-                if (_forumInteractive.Forums.Any(f => f.ForumId == forum.ForumId)
-                && (forum.UserId == _forumInteractive.User.Id
-                || _forumInteractive.User.Role == "admin"))
+                if (_forumInteractive.Forums.Any(f => f.ForumId == forum.ForumId) &&
+                (forum.UserId == _userInteractive.User.Id ||
+                _userInteractive.User.Role == "admin"))
                 {
-                    _forumInteractive.RemoveForum(forum.ForumId);
-                    _forumInteractive.CreateForum(temp);
+                    _forumInteractive.EditForum(forum);
                 }
             }
             return RedirectToAction("Index");
@@ -225,11 +208,15 @@ public class HomeController : Controller
         return View(forum);
     }
 
-    public IActionResult DeleteForum(int? Id)
+    public IActionResult DeleteForum(int? id)
     {
-        if (Id is not null)
+        var forum = _forumInteractive.Forums?.FirstOrDefault(f => f.ForumId == id);
+        if (id is not null &&
+            forum is not null &&
+            _userInteractive.User is not null &&
+            (_userInteractive.User.Id == forum.UserId || _userInteractive.User.Role == "admin"))
         {
-            _forumInteractive.RemoveForum(Id);
+            _forumInteractive.RemoveForum(id);
             return RedirectToAction("Index");
         }
         return NotFound();
@@ -240,17 +227,16 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (comment.Body != string.Empty && _forumInteractive.User is not null)
+            if (comment.Body != string.Empty && _userInteractive.User is not null)
             {
-                comment.UserId = _forumInteractive.User.Id;
+                comment.UserId = _userInteractive.User.Id;
 
                 if (_forumInteractive.Forums is not null)
                 {
                     var forum = _forumInteractive.Forums.First(ff => ff.ForumId == comment.ForumId);
-                    comment.Forum = forum;                                      
+                    comment.Forum = forum;
 
                     _commentInteractive.Create(comment);
-
                     /* used Include method on _forumInteractive.GetAllForum() to get behavior of JOIN SQL
                     forum.Comments ??= [];
                     forum.CommentsId ??= [];

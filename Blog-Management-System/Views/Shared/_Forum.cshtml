@@ -1,85 +1,11 @@
-﻿@model Blog_Management_System.ViewModels.HomeViewModels
+﻿@model HomeViewModels
 @if (Model.Forums is not null)
 {
     @foreach (var forum in Model.Forums)
     {
         <div class="card text-center m-lg-4 bg-success text-black"
              style="border-radius: 25px; border-color: whitesmoke; border-width: 0px; box-shadow: 0 5px 18px rgba(0,0,0,0.2); ">
-            <div class="card-header">
-                <div class="row align-items-center">
-                    <div class="row bd-example m-0 border-0">
-                        @if (forum.Statuses is not null)
-                        {
-                            foreach (var status in forum.Statuses)
-                            {
-                                <span class="col-auto me-1 badge rounded-pill bg-danger">@status.Name</span>
-                            }
-                        }
-                        @if (forum.Categories is not null)
-                        {
-                            foreach (var category in forum.Categories)
-                            {
-                                <span class="col-auto me-1 badge rounded-pill bg-warning">@category.Name</span>
-                            }
-                        }
-                    </div>
-                    <div class="col-2 text-start">
-                        <a href="#" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
-                        @if (forum.Like >= 1000)
-                        {
-                            <div class="col-4 text-black  fw-bold text-center">
-                                @(forum.Like % 1000)k
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-4 text-black  fw-bold text-center">
-                                @forum.Like
-                            </div>
-                        }
-                    </div>
-                    <div class="col-8 fw-bold">
-                        <h6><strong>@forum.Title</strong></h6>
-                        <div class="align-items-center">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-outline-dark border-0" data-bs-toggle="modal" data-bs-target="#@($"{forum.Title.Trim()}OpenedModal")">
-                                🕳
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-2 text-body-secondary text-end">
-                        <div class="col">
-                            <div><span style="font-size:12px">😀</span><a href="#" style="color:black">@(Model.Users?.First(us => us.Id == forum.UserId).Username)</a></div>
-                            <div class="text-black-50" style="font-size: 13px">
-                                @if ((DateTime.Now.Date - forum.Created_at.Date).Days > 7)
-                                {
-                                    <div>
-                                        @forum.Created_at.Date
-                                    </div>
-                                }
-                                else if ((DateTime.Now - forum.Created_at).Days >= 2)
-                                {
-                                    <div>
-                                        @((DateTime.Now - forum.Created_at).Days) days ago.
-                                    </div>
-                                }
-                                else if ((DateTime.Now - forum.Created_at).Hours >= 1)
-                                {
-                                    <div>
-                                        @((DateTime.Now - forum.Created_at).Hours) hours ago.
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div>
-                                        @((DateTime.Now - forum.Created_at).Minutes) mins ago.
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <partial name="_DisplayForums" model="forum">
 
             <!-- Modal -->
             <div class="modal fade modal-trigger" id="@($"{forum.Title.Trim()}OpenedModal")" tabindex="-1" aria-labelledby="111ModalLabel" aria-hidden="true">
@@ -98,9 +24,7 @@
                                    class="btn btn-danger @(Model.User is not null
                                                             && (Model.User.Role == "admin"
                                                             || forum.UserId == Model.User.Id)
-                                                            ? "" : "visually-hidden")">
-                                    Edit
-                                </a>
+                                                            ? "" : "visually-hidden")"> Edit</a>
                                 <a asp-controller="Home"
                                    asp-action="DeleteForum"
                                    asp-route-id="@forum.ForumId"
@@ -108,9 +32,7 @@
                                    class="btn btn-danger @(Model.User is not null
                                                             && (Model.User.Role == "admin"
                                                             || forum.UserId == Model.User.Id)
-                                                            ? "" : "visually-hidden")">
-                                    Delete
-                                </a>
+                                                            ? "" : "visually-hidden")">Delete</a>
                             </div>
                             <div class="img-fluid mb-3">
                                 <img src="https://images.unsplash.com/photo-1612512836264-5e58fab88bf0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="width: 100%; height: 100%; object-fit: cover;">
@@ -126,47 +48,11 @@
                 {
                     foreach(var comment in forum.Comments)
                     {
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content bg-success bg-opacity-75">
-                                <div class="modal-body bg-dark text-white">
-                                    <div class="row">
-                                        <div class="col-1 text-center text-danger">
-                                            <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
-                                            <br />
-                                            @comment.Like
-                                        </div>
-                                        <div class="col-9 ms-auto bg-black">
-                                            @comment.Body
-                                        </div>
-                                        <div class="col-2 ms-auto text-end">
-                                            👽<a href="#">@comment.User.Username</a>
-                                            <br />
-                                            💌
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <partial name="_DisplayComments" model="comment" />
                     }
 
                 }
-            <form asp-action="PostComment" method="post" class="comment-footer bg-opacity-50">
-                <input type="hidden" asp-for="@forum.ForumId" name="ForumId" />
-                @*<input type="hidden" name="homeViewModels" value="@(JsonSerializer.Serialize(Model, new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.Preserve }))" />*@
-
-                <div class="main-wrapper">
-                    <label for="textarea-@(forum.Title)" class="form-label modal-footer-textarea-label"></label>
-                    <textarea name="body" class="modal-footer-textarea aqweeee" id="textarea-@(forum.Title)" rows="5" placeholder="Text here.."></textarea>
-                    <p class="loader"></p>
-
-                    <div class="noise-wrapper bg-dark">
-                        <div class="noise">
-                            <div class="modal-footer-textarea loader"></div>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="Opened-Modal modal-footer-textarea-btn btn p-0 btn-close-white text-secondary">Send</button>
-            </form>
+                <partial name="_PostCommentArea" model="forum" />
             </div>
         </div>
     }

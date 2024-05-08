@@ -1,0 +1,76 @@
+﻿@model Forum 
+<div class="card-header">
+    <div class="row align-items-center">
+        <div class="row bd-example m-0 border-0">
+            @if (@Model.Statuses is not null)
+            {
+                foreach (var status in Model.Statuses)
+                {
+                    <span class="col-auto me-1 badge rounded-pill bg-danger">@status.Name</span>
+                }
+            }
+            @if (Model.Categories is not null)
+            {
+                foreach (var category in Model.Categories)
+                {
+                    <span class="col-auto me-1 badge rounded-pill bg-warning">@category.Name</span>
+                }
+            }
+        </div>
+        <div class="col-2 text-start">
+            <a href="#" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
+            @if (Model.Like >= 1000)
+            {
+                <div class="col-4 text-black  fw-bold text-center">
+                    @(Model.Like % 1000)k
+                </div>
+            }
+            else
+            {
+                <div class="col-4 text-black  fw-bold text-center">
+                    @Model.Like
+                </div>
+            }
+        </div>
+        <div class="col-8 fw-bold">
+            <h6><strong>@Model.Title</strong></h6>
+            <div class="align-items-center">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-outline-dark border-0" data-bs-toggle="modal" data-bs-target="#@($"{Model.Title.Trim()}OpenedModal")">
+                    🕳
+                </button>
+            </div>
+        </div>
+        <div class="col-2 text-body-secondary text-end">
+            <div class="col">
+                <div><span style="font-size:12px">🤖</span><a href="#" style="color:black">@(Model.User?.Username)</a></div>
+                <div class="text-black-50" style="font-size: 13px">
+                    @if ((DateTime.Now.Date - Model.Created_at.Date).Days > 7)
+                    {
+                        <div>
+                            @Model.Created_at.ToShortDateString()
+                        </div>
+                    }
+                    else if ((DateTime.Now - Model.Created_at).Days >= 2)
+                    {
+                        <div>
+                            @((DateTime.Now - Model.Created_at).Days) days ago.
+                        </div>
+                    }
+                    else if ((DateTime.Now - Model.Created_at).Hours >= 1)
+                    {
+                        <div>
+                            @((DateTime.Now - Model.Created_at).Hours) hours ago.
+                        </div>
+                    }
+                    else
+                    {
+                        <div>
+                            @((DateTime.Now - Model.Created_at).Minutes) mins ago.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

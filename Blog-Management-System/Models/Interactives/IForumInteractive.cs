@@ -4,7 +4,6 @@ namespace Blog_Management_System.Models.Interactives;
 
 public interface IForumInteractive
 {
-    User? User { get; set; }
     List<Forum>? Forums { get; set; }
     void CreateForum(Forum forum);
     void EditForum(Forum forum);

@@ -1,0 +1,23 @@
+﻿@model Comment
+
+<div class="modal-dialog modal-lg">
+    <div class="modal-content bg-success bg-opacity-75">
+        <div class="modal-body bg-dark text-white">
+            <div class="row">
+                <div class="col-1 text-center text-danger">
+                    <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
+                    <br />
+                    @Model.Like
+                </div>
+                <div class="col-9 ms-auto bg-black">
+                    @Model.Body
+                </div>
+                <div class="col-2 ms-auto text-end">
+                    <a href="#">@Model.User?.Username</a>
+                    <br />
+                    💌
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -7,9 +7,7 @@ namespace Blog_Management_System.Models.Interactives;
 public class ForumInteractive : IForumInteractive
 {
     private readonly BlogManagementSystemDbContext _blogManagementSystemDbContext;
-    public User? User { get; set; }
     public List<Forum>? Forums { get; set; }
-
     public ForumInteractive(BlogManagementSystemDbContext blogManagementSystemDbContext)
     {
         _blogManagementSystemDbContext = blogManagementSystemDbContext;
@@ -38,19 +36,16 @@ public class ForumInteractive : IForumInteractive
 
     public void EditForum(Forum forum)
     {
-        if (User is not null && Forums is not null)
+        if (Forums is not null &&
+        Forums.Any(f => f.ForumId == forum.ForumId))
         {
-            if (Forums.Any(f => f.ForumId == forum.ForumId))
+            var tempForum = _blogManagementSystemDbContext.Forums.Find(forum.ForumId);
+            if (tempForum is not null)
             {
-                //var temp = _blogManagementSystemDbContext.Forums.Find(forum.ForumId);
-                //if (temp is not null)
-                //{
-                //    temp.Title = forum.Title;
-                //    temp.Body = forum.Body;
-                //    temp.Categories = [.. forum.Categories];
-                //}
-                _blogManagementSystemDbContext.Entry(forum).State = EntityState.Detached;
-                _blogManagementSystemDbContext.Forums.Update(forum);
+                tempForum.Title = forum.Title;
+                tempForum.Body = forum.Body;
+                tempForum.CategoriesId = forum.CategoriesId;
+                tempForum.Categories = forum.Categories;
                 _blogManagementSystemDbContext.SaveChanges();
             }
         }
@@ -58,7 +53,7 @@ public class ForumInteractive : IForumInteractive
 
     public List<Forum>? GetAllForums()
     {
-        Forums = [.. _blogManagementSystemDbContext.Forums.Include(f => f.Comments).ToList()];
+        Forums = [.. _blogManagementSystemDbContext.Forums.Include(f => f.Comments)];
         return Forums;
     }
 
@@ -133,22 +128,20 @@ public class ForumInteractive : IForumInteractive
     public void RemoveForum(int? id)
     {
         var forum = _blogManagementSystemDbContext.Forums.Find(id);
-        if (User is not null && forum is not null)
+        if (forum is not null)
         {
-            if (User.Id == forum.UserId || User.Role == "admin")
-            {
-                if (forum.Categories is not null)
-                    RemoveOnTag(forum, forum.Categories);
+            if (forum.Categories is not null)
+                RemoveOnTag(forum, forum.Categories);
 
-                _blogManagementSystemDbContext.Forums.Remove(forum);
-                _blogManagementSystemDbContext.SaveChanges();
-            }
+            _blogManagementSystemDbContext.Forums.Remove(forum);
+            _blogManagementSystemDbContext.SaveChanges();
+
         }
     }
 
-    private static void RemoveOnTag<T>(Forum forum, List<T> tags) where T : ITagFilter
+    private static void RemoveOnTag<T>(Forum forum, List<T> tagsFilter) where T : ITagFilter
     {
-        tags.Select(c =>
+        tagsFilter.Select(c =>
         {
             if (c.Forums is not null)
                 c.Forums.Remove(forum);

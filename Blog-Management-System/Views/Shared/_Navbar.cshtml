@@ -1,10 +1,10 @@
-﻿@model Blog_Management_System.ViewModels.HomeViewModels
+﻿@model HomeViewModels
 <nav class="navbar bg-body-tertiary mb-4">
     <div class="container-fluid">
         <a class="navbar-brand text-primary " href="/">Chukka blog</a>
         @if (Model is null || Model.User is null)
         {
-            <form asp-action="Login" method="post" role="form" class="d-flex">
+            <form asp-action="Login" role="form" class="d-flex">
                 <div class="input-group">
                     <span class="input-group-text bg-success" id="basic-addon1">👽</span>
                     <input name="username" class="form-control" placeholder="Username">
