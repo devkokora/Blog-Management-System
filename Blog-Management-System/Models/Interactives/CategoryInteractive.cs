@@ -17,13 +17,6 @@ namespace Blog_Management_System.Models.Interactives
         {
             Categories = [.. _blogManagementSystemDbContext.Categories
                 .Include(c => c.Forums)];
-            //var a = string.Join("\n", Categories.Select(c =>
-            //{
-            //    if (c.Forums is not null)
-            //        return string.Join(", ", c.Forums.Select(s => s.ForumId));
-            //    return "";
-            //}));
-            //Console.WriteLine(a);
         }
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Blog_Management_System.Controllers;
 
@@ -43,8 +45,68 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var forums = _forumInteractive.Forums?.OrderByDescending(i => i.ForumId).ToList();
+        List<Forum>? forums = [];
+        List<string>? tagForums = [];
 
+        var forumsJson = TempData["tagFilters"] as string;
+
+        if (!string.IsNullOrEmpty(forumsJson))
+        {
+            forums = GetFilterTagForums(JsonSerializer.Deserialize<List<string>>(forumsJson));
+        }
+
+        if (forums is null || forums.Count == 0)
+            forums = _forumInteractive.Forums?.OrderByDescending(i => i.ForumId).ToList();
+
+        InitialIndexForums(forums);
+
+        if (_userInteractive.User is null)
+        {
+            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), null, null);
+            return View(viewmodels);
+        }
+        else
+        {
+            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), _userInteractive.User, null);
+            return View(viewmodels);
+        }
+    }
+
+    private List<Forum>? GetFilterTagForums(List<string>? tagFilters)
+    {
+        if (tagFilters is null)
+            return null;
+
+        _categoryInteractive.UpdateCategories();
+        _statusInteractive.UpdateStatus(_forumInteractive.Forums);
+
+        var allTags = new List<ITagFilter>();
+        allTags.AddRange(_categoryInteractive.Categories.ToList());
+        allTags.AddRange(_statusInteractive.Statuses.ToList());
+
+        var existingTags = new List<ITagFilter>();
+
+        foreach (var tagFilter in tagFilters)
+        {
+            var temp = allTags.FirstOrDefault(at => at.Name == tagFilter);
+            if (temp is not null)
+                existingTags.Add(temp);
+        }
+
+        if (_forumInteractive.Forums is null)
+        {
+            return null;
+        }
+        var forums = _forumInteractive.Forums
+            .Where(f => existingTags
+            .Count(et => et.Forums is not null &&
+            et.Forums.Contains(f)) == existingTags.Count).ToList();
+
+        return [.. forums.Distinct().OrderByDescending(i => i.Created_at)];
+    }
+
+    private void InitialIndexForums(List<Forum>? forums)
+    {
         if (forums is not null)
         {
             _statusInteractive.UpdateStatus(forums);
@@ -60,17 +122,6 @@ public class HomeController : Controller
                 if (hotForums is not null)
                     UpdateForumStatus(hotForums, hotStatus, forum);
             }
-        }
-
-        if (_userInteractive.User is null)
-        {
-            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), null, null);
-            return View(viewmodels);
-        }
-        else
-        {
-            var viewmodels = new HomeViewModels(forums, _userInteractive.GetAllUser(), _userInteractive.User, null);
-            return View(viewmodels);
         }
     }
 
@@ -286,6 +337,13 @@ public class HomeController : Controller
             }
         }
 
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public IActionResult FilterTags(List<string> tagFilters)
+    {
+        TempData["tagFilters"] = JsonSerializer.Serialize(tagFilters);
         return RedirectToAction("Index");
     }
 
