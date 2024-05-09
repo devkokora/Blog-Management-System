@@ -8,7 +8,7 @@
    - 🟢 Associate posts with the user who created them.
 3. **Comments**
    - 🟢 Allow users to add comments to posts.
-   - ⚫ CRUD operations on comments.
+   - 🟢 CRUD operations on comments.
 4. **Admin Panel**
    - 🟢 Special access for admins (editing and deleting any post).
 5. **Search Functionality**
