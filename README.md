@@ -15,9 +15,9 @@
    - 🟢 Implement a search box to find articles by keywords.
    - 🟢 filter by status and/or category
 6. **Other Feature**
-   - ⚫ Users can rate Blogs and comments.
+   - 🟢 Users can rate Blogs and comments.
    - 🟢 Blog feature eg.category ..
 
 ![Alt text](https://github.com/devkokora/Blog-Management-System/blob/master/pics/dbdiagram_v2.png)
 
-![Alt text](https://github.com/devkokora/Blog-Management-System/blob/master/pics/Blog-Management-System-Style_2.png)
+![Alt text](https://github.com/devkokora/Blog-Management-System/blob/master/pics/Blog-Management-System-Style_3.png)
