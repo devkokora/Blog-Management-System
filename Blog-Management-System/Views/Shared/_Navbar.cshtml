@@ -1,13 +1,16 @@
 ﻿@model HomeViewModels
-<nav class="navbar bg-body-tertiary mb-4">
+<nav class="navbar bg-body-tertiary bg-black mb-4">
     <div class="container-fluid">
         <a class="navbar-brand text-primary " href="/">Chukka blog</a>
         @if (Model is null || Model.User is null)
         {
-            <form asp-action="Login" role="form" class="d-flex">
+            <form asp-action="Login" role="form" class="form-floating">
                 <div class="input-group">
                     <span class="input-group-text bg-success" id="basic-addon1">👽</span>
-                    <input name="username" class="form-control" placeholder="Username">
+                    <label asp-for="@Model.User.Username" for="username-login" class="form-label" hidden></label>
+                    <input asp-for="@Model.User.Username" name="username" id="username-login"
+                           class="form-control" 
+                           placeholder="Username">
                     <button class="btn btn-success" type="submit">Login</button>
                 </div>
             </form>
