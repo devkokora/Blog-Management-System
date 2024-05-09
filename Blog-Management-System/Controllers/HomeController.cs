@@ -101,12 +101,12 @@ public class HomeController : Controller
             var user = _userInteractive.GetUserByUserName(username);
             if (user is not null)
             {
-                _userInteractive.User= user;
+                _userInteractive.User = user;
             }
             else
             {
                 user = _userInteractive.CreateUser(username);
-                _userInteractive.User= user;
+                _userInteractive.User = user;
             }
 
             HttpContext.Session.SetString("Username", user!.Username);
@@ -141,13 +141,13 @@ public class HomeController : Controller
             return View();
         else
         {
-            forum.User = _userInteractive.User; 
+            forum.User = _userInteractive.User;
             _forumInteractive.CreateForum(forum);
         }
         return RedirectToAction("Index");
     }
 
-    
+
 
     public IActionResult EditForum(int? Id)
     {
@@ -221,17 +221,71 @@ public class HomeController : Controller
                     comment.Forum = forum;
 
                     _commentInteractive.Create(comment);
-                    /* used Include method on _forumInteractive.GetAllForum() to get behavior of JOIN SQL
-                    forum.Comments ??= [];
-                    forum.CommentsId ??= [];
-                    forum.CommentsId.Add(comment.CommentId);
-                    forum.Comments.Add(comment);
-
-                    _forumInteractive.EditForum(forum);*/
                 }
                 return NoContent();
             }
         }
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult EditComment(int? id)
+    {
+        if (id is null || id == 0)
+            return NotFound();
+
+        if (_userInteractive.User is not null)
+        {
+            if (_userInteractive.User.Role == "admin")
+            {
+                var comment = _commentInteractive.GetById((int)id);
+
+                if (comment is not null)
+                    return View(comment);
+            }
+            else if (_userInteractive.User.Comments is not null)
+            {
+                var comment = _userInteractive.User.Comments
+                    .FirstOrDefault(c => c.CommentId == id);
+
+                if (comment is not null)
+                    return View(comment);
+            }
+        }
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public IActionResult EditComment(Comment? comment)
+    {
+        if (comment is null)
+        {
+            return NotFound();
+        }
+
+        _commentInteractive.Edit(comment);
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult DeleteComment(int? id)
+    {
+        if (id is null || id == 0)
+            return NotFound();
+
+        if (_userInteractive.User is not null)
+        {
+            if (_userInteractive.User.Role == "admin")
+                _commentInteractive.Delete((int)id);
+            else if (_userInteractive.User.Comments is not null)
+            {
+                var comment = _userInteractive.User.Comments
+                    .FirstOrDefault(c => c.CommentId == id);
+                if (comment is not null)
+                {
+                    _commentInteractive.Delete((int)id);
+                }
+            }
+        }
+
         return RedirectToAction("Index");
     }
 

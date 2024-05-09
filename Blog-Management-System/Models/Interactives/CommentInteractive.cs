@@ -6,11 +6,13 @@ namespace Blog_Management_System.Models.Interactives
     public class CommentInteractive : ICommentInteractive
     {
         private readonly BlogManagementSystemDbContext _blogManagementSystemDbContext;
-
+        public List<Comment>? Comments { get; set; }
         public CommentInteractive(BlogManagementSystemDbContext blogManagementSystemDbContext)
         {
             _blogManagementSystemDbContext = blogManagementSystemDbContext;
         }
+        public List<Comment>? GetAll() => _blogManagementSystemDbContext.Comments.ToList();
+        public Comment? GetById(int id) => _blogManagementSystemDbContext.Comments.Find(id);
         public void Create(Comment? comment)
         {
             if (comment is not null)
@@ -21,9 +23,12 @@ namespace Blog_Management_System.Models.Interactives
         }
         public void Edit(Comment comment)
         {
-            _blogManagementSystemDbContext.Entry(comment).State = EntityState.Detached;
-            _blogManagementSystemDbContext.Comments.Update(comment);
-            _blogManagementSystemDbContext.SaveChanges();
+            var tempComment = _blogManagementSystemDbContext.Comments.Find(comment.CommentId);
+            if (tempComment is not null)
+            {
+                tempComment.Body = comment.Body;
+                _blogManagementSystemDbContext.SaveChanges();
+            }
         }
         public void Delete(int id)
         {
@@ -31,7 +36,7 @@ namespace Blog_Management_System.Models.Interactives
             if (tempComment is not null)
             {
                 var forum = tempComment.Forum;
-                if (forum is not null && 
+                if (forum is not null &&
                     forum.Comments is not null)
                 {
                     forum.Comments.Remove(tempComment);
@@ -40,6 +45,6 @@ namespace Blog_Management_System.Models.Interactives
                 _blogManagementSystemDbContext.Comments.Remove(tempComment);
                 _blogManagementSystemDbContext.SaveChanges();
             }
-        }   
+        }
     }
 }
