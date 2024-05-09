@@ -13,7 +13,7 @@
    - 🟢 Special access for admins (editing and deleting any post).
 5. **Search Functionality**
    - ⚫ Implement a search box to find articles by keywords.
-   - ⚫ filter by status and/or category
+   - 🟢 filter by status and/or category
 6. **Other Feature**
    - ⚫ Users can rate Blogs and comments.
    - 🟢 Blog feature eg.category ..
