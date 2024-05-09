@@ -1,0 +1,24 @@
+﻿@model User 
+@if (Model is null)
+{
+    <form asp-action="Login" role="form" class="form-floating">
+        <div class="input-group">
+            <span class="input-group-text bg-success" id="basic-addon1">👽</span>
+            <label asp-for="Username" for="username-login" class="form-label" hidden></label>
+            <input asp-for="Username" id="username-login"
+                   class="form-control"
+                   placeholder="Username">
+            <button class="btn btn-success" type="submit">Login</button>
+        </div>
+    </form>
+}
+else
+{
+    <form asp-action="Logout" role="form" class="d-flex">
+        <div class="input-group">
+            <span class="input-group-text bg-success border-0" id="basic-addon1">
+            👽<strong>@Model.Username</strong></span>
+            <button class="btn btn-warning border-0" type="submit">❌</button>
+        </div>
+    </form>
+}

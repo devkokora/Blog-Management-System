@@ -1,0 +1,19 @@
+﻿@model Comment
+
+<div class="container col-6 ">
+    <div asp-validation-summary="All"></div>
+    <form asp-action="EditComment" method="post" role="form" class="form-control bg-dark text-white border-0">
+        <input type="hidden" asp-for="UserId" />
+        <input type="hidden" asp-for="ForumId" />
+        <input type="hidden" asp-for="CommentId" />
+        <div class="mb-3">
+            <label asp-for="Body" for="exampleFormControlTextarea1" class="form-label"></label>
+            <textarea asp-for="Body" class="form-control bg-while" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <span asp-validation-for="Body" class="text-danger"></span>
+        </div>
+        
+        <div class="justify-content-center text-center">
+            <button class="btn btn-warning pt-3 mt-1 mb-2" type="submit"><h5>Edit</h5></button>
+        </div>
+    </form>
+</div>

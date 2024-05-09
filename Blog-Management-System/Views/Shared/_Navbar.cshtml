@@ -1,29 +1,7 @@
-﻿@model HomeViewModels
-<nav class="navbar bg-body-tertiary bg-black mb-4">
+﻿<nav class="navbar bg-body-tertiary bg-black mb-4">
     <div class="container-fluid">
         <a class="navbar-brand text-primary " href="/">Chukka blog</a>
-        @if (Model is null || Model.User is null)
-        {
-            <form asp-action="Login" role="form" class="form-floating">
-                <div class="input-group">
-                    <span class="input-group-text bg-success" id="basic-addon1">👽</span>
-                    <label asp-for="@Model.User.Username" for="username-login" class="form-label" hidden></label>
-                    <input asp-for="@Model.User.Username" name="username" id="username-login"
-                           class="form-control" 
-                           placeholder="Username">
-                    <button class="btn btn-success" type="submit">Login</button>
-                </div>
-            </form>
-        }
-        else
-        {
-            <form asp-action="Logout" role="form" class="d-flex">
-                <div class="input-group">
-                    <span class="input-group-text bg-success border-0" id="basic-addon1">👽<strong> @Model.User.Username</strong></span>
-                    <button class="btn btn-warning border-0" type="submit">❌</button>
-                </div>
-            </form>
-        }
+        @*@await Component.InvokeAsync("UserDisplay")*@
+        <vc:user-display></vc:user-display>
     </div>
-
 </nav>

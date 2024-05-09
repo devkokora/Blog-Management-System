@@ -14,10 +14,6 @@ builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews();
-    //.AddJsonOptions(options =>
-    // {
-    //     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-    // });
 
 builder.Services.AddDbContext<BlogManagementSystemDbContext>(options =>
     {
