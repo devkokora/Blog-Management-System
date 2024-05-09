@@ -5,7 +5,7 @@
         <div class="modal-body bg-dark text-white">
             <div class="row">
                 <div class="col-1 text-center text-danger">
-                    <a href="#" style="border: hidden; border-radius:5px;" class="btn btn-outline-danger">❤</a>
+                    <a asp-action="LikeComment" asp-route-id="@Model.CommentId" type="button" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
                     <br />
                     @Model.Like
                     </div>

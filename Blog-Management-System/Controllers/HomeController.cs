@@ -361,6 +361,35 @@ public class HomeController : Controller
         return View(new HomeViewModels(null,null,null,null));
     }
 
+    public IActionResult LikeForum(int? id)
+    {
+        if (id is not null && id > 0)
+        {
+            var forum = _forumInteractive.Forums?.FirstOrDefault(f => f.ForumId == id);
+            if (forum is not null && _userInteractive.User is not null)
+            {
+                forum.Like++;
+                _forumInteractive.EditForum(forum);
+            }
+        }
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult LikeComment(int? id)
+    {
+        if (id is not null && id > 0)
+        {
+            var comment = _commentInteractive.GetAll()?.FirstOrDefault(c => c.CommentId == id);
+            if (comment is not null && _userInteractive.User is not null)
+            {
+                comment.Like++;
+                _commentInteractive.Edit(comment);
+            }
+        }
+        return RedirectToAction("Index");
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -1,6 +1,8 @@
 using Blog_Management_System.Models;
 using Blog_Management_System.Models.Interactives;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +37,6 @@ app.UseStaticFiles();
 app.UseSession();
 
 app.UseAuthorization();
-
 app.MapDefaultControllerRoute();
 
 app.Run();

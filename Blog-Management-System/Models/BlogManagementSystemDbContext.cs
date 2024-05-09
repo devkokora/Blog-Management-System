@@ -13,10 +13,6 @@ public class BlogManagementSystemDbContext : DbContext
     {
 
     }
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //{
-    //    optionsBuilder.EnableSensitiveDataLogging();
-    //}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -25,19 +21,19 @@ public class BlogManagementSystemDbContext : DbContext
             .HasOne(c => c.User)
             .WithMany(p => p.Comments)
             .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Comment>()
             .HasOne(c => c.Forum)
             .WithMany(p => p.Comments)
             .HasForeignKey(c => c.ForumId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Forum>()
             .HasOne(f => f.User)
             .WithMany(u => u.Forums)
             .HasForeignKey(f => f.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Category>().HasData(
              new Category()
@@ -124,5 +120,4 @@ public class BlogManagementSystemDbContext : DbContext
         //        Created_at = DateTime.Now
         //    });
     }
-
 }

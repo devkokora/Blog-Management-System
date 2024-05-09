@@ -18,16 +18,16 @@
             }
         </div>
         <div class="col-2 text-start">
-            <a href="#" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
+            <a asp-action="LikeForum" asp-route-id="@Model.ForumId" type="button" style="border: hidden; border-radius:10px;" class="btn btn-outline-danger">❤</a>
             @if (Model.Like >= 1000)
             {
-                <div class="col-4 text-black  fw-bold text-center">
+                <div class="col-4 text-white-50  fw-bold text-center">
                     @(Model.Like % 1000)k
                 </div>
             }
             else
             {
-                <div class="col-4 text-black  fw-bold text-center">
+                <div class="col-4 text-white-50  fw-bold text-center">
                     @Model.Like
                 </div>
             }
@@ -36,15 +36,15 @@
             <h6><strong>@Model.Title</strong></h6>
             <div class="align-items-center">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-outline-dark border-0" data-bs-toggle="modal" data-bs-target="#@($"{Model.Title.Trim()}OpenedModal")">
+                <button type="button" class="btn btn-outline-light border-0" data-bs-toggle="modal" data-bs-target="#@($"{Model.Title.Trim()}OpenedModal")">
                     🕳
                 </button>
             </div>
         </div>
         <div class="col-2 text-body-secondary text-end">
             <div class="col">
-                <div><span style="font-size:12px">🤖</span><a href="#" style="color:black">@(Model.User?.Username)</a></div>
-                <div class="text-black-50" style="font-size: 13px">
+                <div><span style="font-size:12px"></span><a href="#" style="color:antiquewhite">@(Model.User?.Username)</a></div>
+                <div class="text-white-50" style="font-size: 13px">
                     @if ((DateTime.Now.Date - Model.Created_at.Date).Days > 7)
                     {
                         <div>

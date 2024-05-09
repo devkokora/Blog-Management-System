@@ -44,6 +44,7 @@ public class ForumInteractive : IForumInteractive
             {
                 tempForum.Title = forum.Title;
                 tempForum.Body = forum.Body;
+                tempForum.Like = forum.Like;
                 tempForum.CategoriesId = forum.CategoriesId;
                 tempForum.Categories = forum.Categories;
                 _blogManagementSystemDbContext.SaveChanges();

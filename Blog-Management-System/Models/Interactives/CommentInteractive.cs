@@ -27,6 +27,7 @@ namespace Blog_Management_System.Models.Interactives
             if (tempComment is not null)
             {
                 tempComment.Body = comment.Body;
+                tempComment.Like = comment.Like;
                 _blogManagementSystemDbContext.SaveChanges();
             }
         }
