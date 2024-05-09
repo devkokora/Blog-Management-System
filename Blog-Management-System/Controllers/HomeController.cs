@@ -347,6 +347,20 @@ public class HomeController : Controller
         return RedirectToAction("Index");
     }
 
+    [HttpPost]
+    public IActionResult Search(string searchText)
+    {
+        if (searchText.Length >= 3)
+        {
+            var forums = _forumInteractive.Forums;
+            var matchForums = forums?.Where(f => f.Title.Contains(searchText) || f.Body.Contains(searchText)).Distinct().ToList();
+
+            return View(new HomeViewModels(matchForums, _userInteractive.GetAllUser(), _userInteractive.User, null));
+        }
+
+        return View(new HomeViewModels(null,null,null,null));
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
