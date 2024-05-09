@@ -7,53 +7,63 @@
              style="border-radius: 25px; border-color: whitesmoke; border-width: 0px; box-shadow: 0 5px 18px rgba(0,0,0,0.2); ">
             <partial name="_DisplayForums" model="forum">
 
-            <!-- Modal -->
-            <div class="modal fade modal-trigger" id="@($"{forum.Title.Trim()}OpenedModal")" tabindex="-1" aria-labelledby="111ModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content bg-success bg-opacity-75">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="111ModalLabel">@forum.Title</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body bg-dark text-white">
-                            <div class="text-end mb-3">
-                                <a asp-controller="Home"
-                                   asp-action="EditForum"
-                                   asp-route-id="@forum.ForumId"
-                                   type="button"
-                                   class="btn btn-danger @(Model.User is not null
+                <!-- Modal -->
+                <div class="modal fade modal-trigger" id="@($"{forum.Title.Trim()}OpenedModal")" tabindex="-1" aria-labelledby="111ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content bg-success bg-opacity-75">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="111ModalLabel">@forum.Title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body bg-dark text-white">
+                                <div class="text-end mb-3">
+                                    <a asp-controller="Home"
+                                       asp-action="EditForum"
+                                       asp-route-id="@forum.ForumId"
+                                       type="button"
+                                       class="btn btn-outline-warning @(Model.User is not null
                                                             && (Model.User.Role == "admin"
                                                             || forum.UserId == Model.User.Id)
-                                                            ? "" : "visually-hidden")"> Edit</a>
-                                <a asp-controller="Home"
-                                   asp-action="DeleteForum"
-                                   asp-route-id="@forum.ForumId"
-                                   type="button"
-                                   class="btn btn-danger @(Model.User is not null
+                                                            ? "" : "visually-hidden")">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                        </svg>
+                                    </a>
+                                    <a asp-controller="Home"
+                                       asp-action="DeleteForum"
+                                       asp-route-id="@forum.ForumId"
+                                       type="button"
+                                       class="btn btn-outline-danger @(Model.User is not null
                                                             && (Model.User.Role == "admin"
                                                             || forum.UserId == Model.User.Id)
-                                                            ? "" : "visually-hidden")">Delete</a>
-                            </div>
-                            <div class="img-fluid mb-3">
-                                <img src="https://images.unsplash.com/photo-1612512836264-5e58fab88bf0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                            <div class="container-fluid text-center justify-content-center">
-                                @forum.Body
+                                                            ? "" : "visually-hidden")">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                                <div class="img-fluid mb-3">
+                                    <img src="https://images.unsplash.com/photo-1612512836264-5e58fab88bf0?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                                <div class="container-fluid text-center justify-content-center">
+                                    @forum.Body
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                @if (forum.Comments is not null)
-                {
-                    foreach(var comment in forum.Comments)
+                    @if (forum.Comments is not null)
                     {
-                        <partial name="_DisplayComments" model="comment" />
-                    }
+                        foreach (var comment in forum.Comments)
+                        {
+                            <partial name="_DisplayComments" model="comment" />
+                        }
 
-                }
-                <partial name="_PostCommentArea" model="forum" />
-            </div>
+                    }
+                    <partial name="_PostCommentArea" model="forum" />
+                </div>
         </div>
     }
 }

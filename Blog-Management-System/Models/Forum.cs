@@ -9,7 +9,11 @@ public class Forum
 {
     [Key]
     public int ForumId { get; set; }
+    [Required]
+    [StringLength(30, ErrorMessage = "Title must be less than 30 characters.")]
     public string Title { get; set; } = string.Empty;
+    [Required]
+    [StringLength(250, ErrorMessage = "Message must be less than 250 characters.")]
     public string Body { get; set; } = string.Empty;
     public int Like { get; set; }
     public DateTime Created_at { get; set; }

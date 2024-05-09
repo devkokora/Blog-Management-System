@@ -7,6 +7,7 @@ namespace Blog_Management_System.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Username { get; set; } = string.Empty;
         public string Role { get; set; } = string.Empty;
         public DateTime Created_at { get; set; }

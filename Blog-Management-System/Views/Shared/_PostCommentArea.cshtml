@@ -1,7 +1,6 @@
 ﻿@model Forum
 <form asp-action="PostComment" method="post" class="comment-footer bg-opacity-50">
     <input type="hidden" asp-for="@Model.ForumId" name="ForumId" />
-
     <div class="main-wrapper">
         <label for="textarea-@(Model.Title)" class="form-label modal-footer-textarea-label"></label>
         <textarea name="body" class="modal-footer-textarea aqweeee" id="textarea-@(Model.Title)" rows="5" placeholder="Text here.."></textarea>

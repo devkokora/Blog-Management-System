@@ -8,6 +8,8 @@ namespace Blog_Management_System.Models
     {
         [Key]
         public int CommentId { get; set; }
+        [Required]
+        [StringLength(250, ErrorMessage = "Message must be less than 250 characters.")]
         public string Body { get; set; } = string.Empty;
         [ValidateNever]
         public int Like { get; set; } = 0;
