@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Blog_Management_System.Migrations
 {
     /// <inheritdoc />
-    public partial class addcommentId : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,12 +60,11 @@ namespace Blog_Management_System.Migrations
                 {
                     ForumId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Like = table.Column<int>(type: "int", nullable: false),
                     Created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CategoriesId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CommentsId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -109,7 +108,7 @@ namespace Blog_Management_System.Migrations
                 {
                     CommentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Body = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Like = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ForumId = table.Column<int>(type: "int", nullable: false)

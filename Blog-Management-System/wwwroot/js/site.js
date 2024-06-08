@@ -43,23 +43,23 @@ document.addEventListener("click", () => {
 });
 
 
-const openedModals = document.querySelectorAll(".Opened-Modal");
-const modals = document.querySelectorAll(".modal-trigger");
+//const openedModals = document.querySelectorAll(".Opened-Modal");
+//const modals = document.querySelectorAll(".modal-trigger");
 
-for (let i = 0; i < openedModals.length; i++) {
-    openedModals[i].addEventListener("click", () => {
+//for (let i = 0; i < openedModals.length; i++) {
+//    openedModals[i].addEventListener("click", () => {
 
-        let getModalShowId = "";
+//        let getModalShowId = "";
 
-        for (let j = 0; j < modals.length; j++) {
-            const getModalHideId = modals[j].id;
-            if (i === j) {
-                getModalShowId = getModalHideId;
-            }
-            $(`#${getModalHideId}`).modal('hide');
-        }
-        setTimeout(function () {
-            $(`#${getModalShowId}`).modal('show');
-        }, 500);
-    });
-}
+//        for (let j = 0; j < modals.length; j++) {
+//            const getModalHideId = modals[j].id;
+//            if (i === j) {
+//                getModalShowId = getModalHideId;
+//            }
+//            $(`#${getModalHideId}`).modal('hide');
+//        }
+//        setTimeout(function () {
+//            $(`#${getModalShowId}`).modal('show');
+//        }, 500);
+//    });
+//}

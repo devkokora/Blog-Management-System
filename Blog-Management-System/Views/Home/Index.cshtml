@@ -1,5 +1,16 @@
 ﻿<div class="container">
     <div class="row justify-content-center">
+        @{
+            var openModal = TempData["OpenModal"] as string;
+        }
+        @if (!string.IsNullOrEmpty(openModal))
+        {
+            <input id="openModal" value="@openModal" hidden/>
+        }
+        else
+        {
+            <input id="openModal" value="" hidden/>
+        }
         <div class="col-lg-8">
             @{
                 <partial name="_StatusAndCategory" />
@@ -12,3 +23,12 @@
         </div>
     </div>
 </div>
+
+<script>
+    const opModal = document.getElementById("openModal");
+    if (opModal.value.length > 0) {
+        setTimeout(function () {
+            $(`#${opModal.value}`).modal('show');
+        }, 300);
+    }
+</script>

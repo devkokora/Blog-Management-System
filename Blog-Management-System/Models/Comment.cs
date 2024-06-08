@@ -14,12 +14,12 @@ namespace Blog_Management_System.Models
         [ValidateNever]
         public int Like { get; set; } = 0;
         [ValidateNever]
+        [ForeignKey("User")]
         public int UserId { get; set; }
-        [ForeignKey("UserId")]
         public User? User { get; set; }
 
+        [ForeignKey("Forum")]
         public int ForumId { get; set; }
-        [ForeignKey("ForumId")]
         public Forum? Forum { get; set; }
     }
 }

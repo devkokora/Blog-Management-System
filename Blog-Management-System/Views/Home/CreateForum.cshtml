@@ -18,12 +18,12 @@
                 <div class="btn-group" role="group" aria-label="Basic checkbox toggle button">
                     @foreach (CategoryType category in Enum.GetValues(typeof(CategoryType)))
                     {
-                    <input type="checkbox" class="btn-check" 
-                           id="btncheck@(category)" 
-                           name="Forum.CategoriesId" 
-                           value="@((int)category)" 
-                           autocomplete="off">
-                    <label class="btn btn-outline-warning" for="btncheck@(category)">@category.ToString()</label>
+                        <input type="checkbox" class="btn-check"
+                               id="btncheck@(category)"
+                               name="Forum.CategoriesId"
+                               value="@((int)category)"
+                               autocomplete="off">
+                        <label class="btn btn-outline-warning" for="btncheck@(category)">@category.ToString()</label>
                     }
                 </div>
             </div>

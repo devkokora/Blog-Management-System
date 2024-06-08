@@ -32,7 +32,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("ForumId")
                         .HasColumnType("int");
@@ -62,7 +63,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("CategoriesId")
                         .HasColumnType("nvarchar(max)");
@@ -75,7 +77,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

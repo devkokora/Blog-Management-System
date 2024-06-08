@@ -21,8 +21,8 @@ public class Forum
     public List<int>? CategoriesId { get; set; }
     public List<Category>? Categories { get; set; }
     public List<Comment>? Comments { get; set; }
+    [ForeignKey("User")]
     public int UserId { get; set; }
 
-    [ForeignKey("UserId")]
     public User? User { get; set; }
 }

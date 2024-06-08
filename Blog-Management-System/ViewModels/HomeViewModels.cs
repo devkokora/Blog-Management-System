@@ -7,9 +7,10 @@ public class HomeViewModels
     public User? User { get; set; }
     public List<User>? Users { get; set; }
     public List<Forum>? Forums { get; }
-    public Forum? Forum { get; set; } = new();
-    public ForumMetaData MetaData { get; set; } = new();
-    public Comment Comment { get; set; } = new();
+    public Forum? Forum { get; set; }
+    public ForumMetaData? MetaData { get; set; }
+    public Comment? Comment { get; set; }
+    
     public HomeViewModels(List<Forum>? forums, List<User>? users, User? user, Forum? forum)
     {
         Forums = forums;

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Blog_Management_System.Migrations
 {
     [DbContext(typeof(BlogManagementSystemDbContext))]
-    [Migration("20240507232801_remove-CommentId")]
-    partial class removeCommentId
+    [Migration("20240608152033_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("ForumId")
                         .HasColumnType("int");
@@ -65,7 +66,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Body")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("CategoriesId")
                         .HasColumnType("nvarchar(max)");
@@ -78,7 +80,8 @@ namespace Blog_Management_System.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

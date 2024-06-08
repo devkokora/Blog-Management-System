@@ -21,19 +21,19 @@ public class BlogManagementSystemDbContext : DbContext
             .HasOne(c => c.User)
             .WithMany(p => p.Comments)
             .HasForeignKey(c => c.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Comment>()
             .HasOne(c => c.Forum)
             .WithMany(p => p.Comments)
             .HasForeignKey(c => c.ForumId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Forum>()
             .HasOne(f => f.User)
             .WithMany(u => u.Forums)
             .HasForeignKey(f => f.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<Category>().HasData(
              new Category()

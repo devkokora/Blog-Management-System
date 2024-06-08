@@ -175,12 +175,11 @@ public class HomeController : Controller
     {
         if (_userInteractive.User is null)
         {
-            var viewmodels = new HomeViewModels(null, null, null, null);
-            return View(viewmodels);
+            return RedirectToAction(nameof(Index));
         }
         else
         {
-            var viewmodels = new HomeViewModels(null, _userInteractive.GetAllUser(), _userInteractive.User, null);
+            var viewmodels = new HomeViewModels(null, null, _userInteractive.User, new Forum());
             return View(viewmodels);
         }
     }
@@ -266,14 +265,13 @@ public class HomeController : Controller
             {
                 comment.UserId = _userInteractive.User.Id;
 
-                if (_forumInteractive.Forums is not null)
-                {
-                    var forum = _forumInteractive.Forums.First(ff => ff.ForumId == comment.ForumId);
-                    comment.Forum = forum;
+                var forum = _forumInteractive.Forums?.FirstOrDefault(fr => fr.ForumId == comment.ForumId);
 
+                if (forum is not null)
+                {
                     _commentInteractive.Create(comment);
+                    TempData["OpenModal"] = $"{forum.Title.Trim()}OpenedModal";
                 }
-                return NoContent();
             }
         }
         return RedirectToAction("Index");
@@ -358,7 +356,7 @@ public class HomeController : Controller
             return View(new HomeViewModels(matchForums, _userInteractive.GetAllUser(), _userInteractive.User, null));
         }
 
-        return View(new HomeViewModels(null,null,null,null));
+        return View(new HomeViewModels(null, null, null, null));
     }
 
     public IActionResult LikeForum(int? id)
